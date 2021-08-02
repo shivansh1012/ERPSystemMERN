@@ -7,7 +7,8 @@ const jwt = require("jsonwebtoken");
 const Course = require("../OpenService/course.model.js");
 const Center = require("./center.model.js");
 const Employee = require("./employees.model.js");
-const enquiry = require("../OpenService/enquiry.model.js");
+const Enquiry = require("../OpenService/enquiry.model.js");
+const Student = require("../StudentService/student.model.js");
 
 //Authorization of admin
 const centerAuth = require("./Middleware/centerAuth.js");
@@ -46,25 +47,63 @@ router.post("/login", async (req, res) => {
     }
 });
 
-// router.post("/register/student", centerAuth, async (req, res) => {
-//     try {
-//         console.log(req.originalUrl)
+router.get("/employee",  async (req, res) => {
+    try {
+        console.log(req.originalUrl)
+        const employeeList = await Employee.find();
+        //console.log(enquiryList)
+        res.status(200).json(employeeList);
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
+    }
+});
 
-//     } catch (e) {
-//         console.error(e);
-//         res.status(500).json({ errorMessage: "Internal Server Error" }).send();
-//     }
-// });
+router.post("/employee", centerAuth, async (req, res) => {
+    try {
+        console.log(req.originalUrl)
 
-// router.post("/enquiry", centerAuth, async (req, res) => {
-//     try {
-//         console.log(req.originalUrl)
-        
-//     } catch (e) {
-//         console.error(e);
-//         res.status(500).json({ errorMessage: "Internal Server Error" }).send();
-//     }
-// });
+        res.status(200).json({message: "success"});
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
+    }
+});
+
+router.get("/student",  async (req, res) => {
+    try {
+        console.log(req.originalUrl)
+        const studentList = await Student.find();
+        //console.log(enquiryList)
+        res.status(200).json(studentList);
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
+    }
+});
+
+router.post("/student", centerAuth, async (req, res) => {
+    try {
+        console.log(req.originalUrl)
+
+        res.status(200).json({message: "success"});
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
+    }
+});
+
+router.get("/enquiry",  async (req, res) => {
+    try {
+        console.log(req.originalUrl)
+        const enquiryList = await Enquiry.find();
+        //console.log(enquiryList)
+        res.status(200).json(enquiryList);
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
+    }
+});
 
 router.get("/logout", (req, res) => {
     console.log(req.originalUrl)

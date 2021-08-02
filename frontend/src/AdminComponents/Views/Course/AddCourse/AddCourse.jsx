@@ -33,7 +33,7 @@ export default function AddCourse() {
             discount: discount
         }
         axios
-            .post(`${apiBaseURL}/admin/course/new`, FormData, {
+            .post(`${apiBaseURL}/admin/course`, FormData, {
                 headers: {
                     "Content-Type": "application/json",
                 },

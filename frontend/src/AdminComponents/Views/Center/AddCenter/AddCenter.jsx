@@ -28,7 +28,7 @@ export default function AddCenter() {
                 country: country,
             }
             axios
-                .post(`${apiBaseURL}/admin/center/new`, FormData, {
+                .post(`${apiBaseURL}/admin/center`, FormData, {
                     headers: {
                         "Content-Type": "application/json",
                     },

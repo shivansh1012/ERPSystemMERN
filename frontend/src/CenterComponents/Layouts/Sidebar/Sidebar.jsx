@@ -64,10 +64,12 @@ export default function Sidebar() {
                 <div className="sidebarMenu">
                     <h3 className="sidebarTitle">Staff</h3>
                     <ul className="sidebarList">
-                        <li className="sidebarListItem">
-                            <Report className="sidebarIcon" />
-                            Enquiries
-                        </li>
+                        <Link to="/center/enquiry" className="link">
+                            <li className="sidebarListItem">
+                                <Report className="sidebarIcon" />
+                                Enquiries
+                            </li>
+                        </Link>
                         <li className="sidebarListItem">
                             <Timeline className="sidebarIcon" />
                             Analytics

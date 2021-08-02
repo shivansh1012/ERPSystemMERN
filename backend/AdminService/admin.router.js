@@ -105,7 +105,7 @@ router.post("/init/generalInfo" , async(req, res) => {
     }
 })
 
-router.post("/center/new", adminAuth, async (req, res) => {
+router.post("/center", adminAuth, async (req, res) => {
     try {
         console.log(req.originalUrl)
 
@@ -148,7 +148,7 @@ router.post("/center/new", adminAuth, async (req, res) => {
     }
 })
 
-router.post("/course/new", adminAuth, async (req, res) => {
+router.post("/course", adminAuth, async (req, res) => {
     try {
         console.log(req.originalUrl)
 
