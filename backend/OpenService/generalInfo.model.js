@@ -12,6 +12,10 @@ const generalInfoSchema = new mongoose.Schema({
         type: Array,
         default:[]
     },
+    totalCourses:{
+        type: Number,
+        default: 0,
+    },
     totalEmployees:{
         type: Number,
         default: 0,

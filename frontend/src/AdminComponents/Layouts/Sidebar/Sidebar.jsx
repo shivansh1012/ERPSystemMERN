@@ -9,7 +9,6 @@ import {
     Assessment,
     WorkOutline,
     Report,
-    Update,
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
@@ -43,12 +42,6 @@ export default function Sidebar() {
                                 New Center
                             </li>
                         </Link>
-                        <Link to="/admin/center/update" className="link">
-                            <li className="sidebarListItem">
-                                <Update className="sidebarIcon" />
-                                Update Center
-                            </li>
-                        </Link>
                     </ul>
                 </div>
                 <div className="sidebarMenu">
@@ -64,12 +57,6 @@ export default function Sidebar() {
                             <li className="sidebarListItem">
                                 <LibraryBooks className="sidebarIcon" />
                                 New Course
-                            </li>
-                        </Link>
-                        <Link to="/admin/course/update" className="link">
-                            <li className="sidebarListItem">
-                                <Update className="sidebarIcon" />
-                                Update Course
                             </li>
                         </Link>
                     </ul>

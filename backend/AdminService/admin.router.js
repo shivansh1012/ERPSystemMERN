@@ -90,6 +90,19 @@ router.post("/login", async (req, res) => {
     }
 })
 
+router.get("/generalInfo" , async(req, res) => {
+    try {
+        console.log(req.originalUrl)
+
+        const generalinfo = await GeneralInfo.findOne({tag:"v1"});
+        
+        res.status(200).json(generalinfo);
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
+    }
+})
+
 router.post("/init/generalInfo" , async(req, res) => {
     try {
         console.log(req.originalUrl)
@@ -99,6 +112,19 @@ router.post("/init/generalInfo" , async(req, res) => {
         const savedGeneralInfo = newGeneralInfo.save()
 
         res.status(200).json({message: "Success"});
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
+    }
+})
+
+router.get("/center", adminAuth, async (req, res) => {
+    try {
+        console.log(req.originalUrl)
+
+        const centerList = await Center.find();
+        res.status(200).json(centerList);
+
     } catch (e) {
         console.error(e);
         res.status(500).json({ errorMessage: "Internal Server Error" }).send();
@@ -123,7 +149,6 @@ router.post("/center", adminAuth, async (req, res) => {
             country: req.body.country,
             employees: ["admin"+req.body.name+"@mail.com"]
         });
-        //console.log(newCenter);
 
         const newEmployee = new Employee({
             id: "E"+generalInfo.totalEmployees,
@@ -148,11 +173,41 @@ router.post("/center", adminAuth, async (req, res) => {
     }
 })
 
+router.get("/course", adminAuth, async (req, res) => {
+    try {
+        console.log(req.originalUrl)
+
+        const courseList = await Course.find();
+        res.status(200).json(courseList);
+
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
+    }
+})
+
 router.post("/course", adminAuth, async (req, res) => {
     try {
         console.log(req.originalUrl)
 
+        const generalInfo = await GeneralInfo.findOne({tag:"v1"});
+        generalInfo.totalCourses+=1;
 
+        const newCourse = new Course({
+            id: "Course"+generalInfo.totalCourses,
+            title: req.body.title,
+            description: req.body.description,
+            division: req.body.division,
+            duration: req.body.duration,
+            preRequisites: req.body.preRequisites,
+            price: req.body.price,
+            discount: req.body.discount
+        })
+
+        const savedCourse = await newCourse.save();
+        const updateGeneralInfo = await GeneralInfo.updateOne({tag:"v1"}, {totalCourses:generalInfo.totalCourses});
+
+        res.status(200).send();
     } catch (e) {
         console.error(e);
         res.status(500).json({ errorMessage: "Internal Server Error" }).send();
