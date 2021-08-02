@@ -19,7 +19,7 @@ export default function CenterReport() {
     const [centers, setCenters] = useState([]);
 
     useEffect(() => {
-        axios.get(`${apiBaseURL}/admin/center`).then((centerList) => setCenters(centerList.data));
+        axios.get(`${apiBaseURL}/service/center`).then((centerList) => setCenters(centerList.data));
     }, []);
 
     return (

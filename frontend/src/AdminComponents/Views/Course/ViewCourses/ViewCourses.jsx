@@ -19,7 +19,7 @@ export default function ViewCourses() {
     const [courses, setCourses] = useState([]);
 
     useEffect(() => {
-        axios.get(`${apiBaseURL}/admin/course`).then((courseList) => setCourses(courseList.data));
+        axios.get(`${apiBaseURL}/service/course`).then((courseList) => setCourses(courseList.data));
     }, []);
 
     return (

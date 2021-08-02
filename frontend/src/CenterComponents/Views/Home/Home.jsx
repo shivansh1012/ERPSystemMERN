@@ -6,7 +6,7 @@ export default function Home() {
     const [info, setInfo] = useState(["No Data"]);
 
     useEffect(() => {
-        axios.get(`${apiBaseURL}/center/generalinfo`).then((generalinfo) => {
+        axios.get(`${apiBaseURL}/service/generalinfo`).then((generalinfo) => {
             setInfo(generalinfo.data)
         });
     }, []);

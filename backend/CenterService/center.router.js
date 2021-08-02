@@ -19,7 +19,7 @@ const centerAuth = require("./Middleware/centerAuth.js");
 router.post("/login", async (req, res) => {
     try {
         console.log(req.originalUrl)
-        
+
         // console.log(req)
         const { email, password } = req.body;
 
@@ -31,7 +31,7 @@ router.post("/login", async (req, res) => {
         if (!existingEmployee)
             return res.status(401).json({ errorMessage: "Invalid email or password" });
 
-        if (password!=existingEmployee.password)
+        if (password != existingEmployee.password)
             return res.status(401).json({ errorMessage: "Invalid email or password" });
 
         const token = jwt.sign({
@@ -60,25 +60,12 @@ router.post("/login", async (req, res) => {
     }
 });
 
-router.get("/generalInfo" , async(req, res) => {
-    try {
-        console.log(req.originalUrl)
-
-        const generalinfo = await GeneralInfo.findOne({tag:"v1"});
-        
-        res.status(200).json(generalinfo);
-    } catch (e) {
-        console.error(e);
-        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
-    }
-})
-
-router.get("/employee",  async (req, res) => {
+router.get("/employee", async (req, res) => {
     try {
         console.log(req.originalUrl)
         const center = req.cookies.EmployeeCenter
 
-        const employeeList = await Employee.find({center:center});
+        const employeeList = await Employee.find({ center: center });
         //console.log(enquiryList)
         res.status(200).json(employeeList);
     } catch (e) {
@@ -92,12 +79,12 @@ router.post("/employee", centerAuth, async (req, res) => {
         console.log(req.originalUrl)
         const center = req.cookies.EmployeeCenter
 
-        const generalInfo = await GeneralInfo.findOne({tag:"v1"});
-        
-        generalInfo.totalEmployees+=1;
+        const generalInfo = await GeneralInfo.findOne({ tag: process.env.VERSION });
+
+        generalInfo.totalEmployees += 1;
 
         const newEmployeeData = new Employee({
-            id: "E"+generalInfo.totalEmployees,
+            id: "E" + generalInfo.totalEmployees,
             name: req.body.name,
             email: req.body.email,
             password: req.body.password,
@@ -107,21 +94,21 @@ router.post("/employee", centerAuth, async (req, res) => {
         })
 
         const savedEmployee = await newEmployeeData.save();
-        const updateGeneralInfo = await GeneralInfo.updateOne({tag:"v1"}, {totalEmployees: generalInfo.totalEmployees});
+        const updateGeneralInfo = await GeneralInfo.updateOne({ tag: process.env.VERSION }, { totalEmployees: generalInfo.totalEmployees });
 
-        res.status(200).json({message: "success"});
+        res.status(200).json({ message: "success" });
     } catch (e) {
         console.error(e);
         res.status(500).json({ errorMessage: "Internal Server Error" }).send();
     }
 });
 
-router.get("/student",  async (req, res) => {
+router.get("/student", async (req, res) => {
     try {
         console.log(req.originalUrl)
         const center = req.cookies.EmployeeCenter
-        
-        const studentList = await Student.find({center:center});
+
+        const studentList = await Student.find({ center: center });
 
         res.status(200).json(studentList);
     } catch (e) {
@@ -134,19 +121,7 @@ router.post("/student", centerAuth, async (req, res) => {
     try {
         console.log(req.originalUrl)
 
-        res.status(200).json({message: "success"});
-    } catch (e) {
-        console.error(e);
-        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
-    }
-});
-
-router.get("/enquiry",  async (req, res) => {
-    try {
-        console.log(req.originalUrl)
-        const enquiryList = await Enquiry.find();
-        //console.log(enquiryList)
-        res.status(200).json(enquiryList);
+        res.status(200).json({ message: "success" });
     } catch (e) {
         console.error(e);
         res.status(500).json({ errorMessage: "Internal Server Error" }).send();

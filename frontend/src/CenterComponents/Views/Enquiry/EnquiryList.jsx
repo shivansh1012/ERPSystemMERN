@@ -20,7 +20,7 @@ export default function EnquiryList() {
     const [enquiries, setEnquiries] = useState([]);
 
     useEffect(() => {
-        axios.get(`${apiBaseURL}/center/enquiry`).then((enquiriesList) => setEnquiries(enquiriesList.data));
+        axios.get(`${apiBaseURL}/service/enquiry`).then((enquiriesList) => setEnquiries(enquiriesList.data));
     }, []);
 
     return (

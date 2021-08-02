@@ -90,56 +90,15 @@ router.post("/login", async (req, res) => {
     }
 })
 
-router.get("/generalInfo" , async(req, res) => {
-    try {
-        console.log(req.originalUrl)
-
-        const generalinfo = await GeneralInfo.findOne({tag:"v1"});
-        
-        res.status(200).json(generalinfo);
-    } catch (e) {
-        console.error(e);
-        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
-    }
-})
-
-router.post("/init/generalInfo" , async(req, res) => {
-    try {
-        console.log(req.originalUrl)
-        const newGeneralInfo = new GeneralInfo({
-            tag:"v1",
-        })
-        const savedGeneralInfo = newGeneralInfo.save()
-
-        res.status(200).json({message: "Success"});
-    } catch (e) {
-        console.error(e);
-        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
-    }
-})
-
-router.get("/center", adminAuth, async (req, res) => {
-    try {
-        console.log(req.originalUrl)
-
-        const centerList = await Center.find();
-        res.status(200).json(centerList);
-
-    } catch (e) {
-        console.error(e);
-        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
-    }
-})
-
 router.post("/center", adminAuth, async (req, res) => {
     try {
         console.log(req.originalUrl)
 
-        const generalInfo = await GeneralInfo.findOne({tag:"v1"});
-        generalInfo.totalCenters+=1;
-        generalInfo.totalEmployees+=1;
+        const generalInfo = await GeneralInfo.findOne({ tag: process.env.VERSION });
+        generalInfo.totalCenters += 1;
+        generalInfo.totalEmployees += 1;
         const newCenter = new Center({
-            id: "C"+generalInfo.totalCenters,
+            id: "C" + generalInfo.totalCenters,
             name: req.body.name,
             contactEmail: req.body.contactEmail,
             contactMobile: req.body.contactMobile,
@@ -147,39 +106,26 @@ router.post("/center", adminAuth, async (req, res) => {
             city: req.body.city,
             state: req.body.state,
             country: req.body.country,
-            employees: ["admin"+req.body.name+"@mail.com"]
+            employees: ["admin" + req.body.name + "@mail.com"]
         });
 
         const newEmployee = new Employee({
-            id: "E"+generalInfo.totalEmployees,
-            name: "admin"+req.body.name,
+            id: "E" + generalInfo.totalEmployees,
+            name: "admin" + req.body.name,
             permission: 1,
-            email: "admin"+req.body.name+"@mail.com",
+            email: "admin" + req.body.name + "@mail.com",
             password: "admin1234",
             contactMobile: "admin",
             address: "admin",
             center: req.body.name
         })
         generalInfo.centers.push(req.body.name);
-        
+
         const savedCenter = await newCenter.save();
         const savedEmployee = await newEmployee.save();
-        const updateGeneralInfo = await GeneralInfo.updateOne({tag:"v1"}, {totalCenters:generalInfo.totalCenters, centers: generalInfo.centers, totalEmployees: generalInfo.totalEmployees});
+        const updateGeneralInfo = await GeneralInfo.updateOne({ tag: process.env.VERSION }, { totalCenters: generalInfo.totalCenters, centers: generalInfo.centers, totalEmployees: generalInfo.totalEmployees });
 
         res.sendStatus(200);
-    } catch (e) {
-        console.error(e);
-        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
-    }
-})
-
-router.get("/course", adminAuth, async (req, res) => {
-    try {
-        console.log(req.originalUrl)
-
-        const courseList = await Course.find();
-        res.status(200).json(courseList);
-
     } catch (e) {
         console.error(e);
         res.status(500).json({ errorMessage: "Internal Server Error" }).send();
@@ -190,11 +136,11 @@ router.post("/course", adminAuth, async (req, res) => {
     try {
         console.log(req.originalUrl)
 
-        const generalInfo = await GeneralInfo.findOne({tag:"v1"});
-        generalInfo.totalCourses+=1;
+        const generalInfo = await GeneralInfo.findOne({ tag: process.env.VERSION });
+        generalInfo.totalCourses += 1;
 
         const newCourse = new Course({
-            id: "Course"+generalInfo.totalCourses,
+            id: "Course" + generalInfo.totalCourses,
             title: req.body.title,
             description: req.body.description,
             division: req.body.division,
@@ -205,7 +151,7 @@ router.post("/course", adminAuth, async (req, res) => {
         })
 
         const savedCourse = await newCourse.save();
-        const updateGeneralInfo = await GeneralInfo.updateOne({tag:"v1"}, {totalCourses:generalInfo.totalCourses});
+        const updateGeneralInfo = await GeneralInfo.updateOne({ tag: process.env.VERSION }, { totalCourses: generalInfo.totalCourses });
 
         res.status(200).send();
     } catch (e) {

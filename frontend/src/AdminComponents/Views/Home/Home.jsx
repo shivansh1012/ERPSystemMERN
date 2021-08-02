@@ -6,13 +6,13 @@ export default function Home() {
     const [info, setInfo] = useState(["No Data"]);
 
     useEffect(() => {
-        axios.get(`${apiBaseURL}/admin/generalinfo`).then((generalinfo) => {
+        axios.get(`${apiBaseURL}/service/generalinfo`).then((generalinfo) => {
             setInfo(generalinfo.data)
         });
     }, []);
 
     return (
-        <div className="home">
+        <div className="page">
             <h3>Version: {info.tag}</h3>
             <h3>Total Centers : {info.totalCenters}</h3>
             <h3>Total Courses: {info.totalCourses}</h3>

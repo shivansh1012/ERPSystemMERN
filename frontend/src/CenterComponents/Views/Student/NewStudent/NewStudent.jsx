@@ -40,7 +40,6 @@ export default function NewStudent() {
                     console.log(err);
                     alert("Error")
                 });
-
         }
 
     }
@@ -69,36 +68,6 @@ export default function NewStudent() {
                 />
                 <TextField
                     fullWidth
-                    label="Address"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                />
-                <TextField
-                    fullWidth
-                    label="City"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                />
-                <TextField
-                    fullWidth
-                    label="State"
-                    value={state}
-                    onChange={(e) => setState(e.target.value)}
-                />
-                <TextField
-                    fullWidth
-                    label="Country"
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
-                />
-                <TextField
-                    fullWidth
-                    label="Center"
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
-                />
-                <TextField
-                    fullWidth
                     label="Courses"
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
@@ -114,6 +83,30 @@ export default function NewStudent() {
                     label="Discount"
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
+                />
+                <TextField
+                    fullWidth
+                    label="Net Amount"
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                />
+                <TextField
+                    fullWidth
+                    label="Address"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                />
+                <TextField
+                    fullWidth
+                    label="City"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                />
+                <TextField
+                    fullWidth
+                    label="State"
+                    value={state}
+                    onChange={(e) => setState(e.target.value)}
                 />
                 <TextField
                     fullWidth
