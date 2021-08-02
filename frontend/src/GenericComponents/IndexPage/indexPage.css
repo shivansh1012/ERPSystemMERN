@@ -1,0 +1,16 @@
+
+.start {
+    display: flex;
+	height: 100vh;
+	width: 100vw;
+	text-align: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.positions {
+    display: flex;
+	align-items: center;
+    justify-content: center;
+	flex-direction: row;
+}
