@@ -106,4 +106,22 @@ router.post("/enquiry", async (req, res) => {
     }
 })
 
+
+router.patch("/enquiry", async (req, res) => {
+    try {
+        console.log(req.originalUrl)
+        
+
+        // const getEnquiry = await Enquiry.findOne({id:req.body.id});
+        // console.log(getEnquiry);
+        // console.log(req.body)
+        const updateEnquiry = await Enquiry.updateOne({id:req.body.id}, { status: req.body.status});
+        res.sendStatus(200);
+    } catch (e) {
+        console.error(e);
+        res.status(500).send();
+    }
+})
+
+
 module.exports = router;

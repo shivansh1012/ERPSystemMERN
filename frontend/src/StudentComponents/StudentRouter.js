@@ -3,30 +3,30 @@ import { Route, useRouteMatch, Redirect } from "react-router-dom";
 import "../App.css";
 
 //authorization
-import CenterAuthContext from "./CenterAuthContext";
+import StudentAuthContext from "./StudentAuthContext";
 
 //import components
 import Login from "./Views/Login/Login.jsx";
 import Sidebar from "./Layouts/Sidebar/Sidebar.jsx";
 import Topbar from "./Layouts/Topbar/Topbar.jsx";
 
-import LoggedInRouter from "./LoggedInRouter";
+import StudentLoggedInRouter from "./StudentLoggedInRouter";
 
-export default function CenterRouter() {
-    const { centerLoggedIn } = useContext(CenterAuthContext);
+export default function StudentRouter() {
+    const { studentLoggedIn } = useContext(StudentAuthContext);
     const { path } = useRouteMatch();
     return (
         <>
-            {centerLoggedIn === true && (
+            {studentLoggedIn === true && (
                 <>
                     <Topbar />
                     <div className="container">
                         <Sidebar />
-                        <LoggedInRouter />
+                        <StudentLoggedInRouter />
                     </div>
                 </>
             )}
-            {centerLoggedIn === false && (
+            {studentLoggedIn === false && (
                 <>
                     <Route exact path={`${path}`}>
                         <Login />

@@ -20,7 +20,8 @@ app.use(cors({
 app.use(`/api/${process.env.VERSION}/admin`, require("./AdminService/admin.router.js"));
 app.use(`/api/${process.env.VERSION}/center`, require("./CenterService/center.router.js"));
 app.use(`/api/${process.env.VERSION}/service`, require("./OpenService/openservice.router.js"));
-// app.use("/api/v1/student", require("./StudentService/student.router.js"));
+app.use(`/api/${process.env.VERSION}/student`, require("./StudentService/student.router.js"));
+
 app.use("*", (req, res) => res.status(404).json({ error: "not found" }));
 
 module.exports = app;

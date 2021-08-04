@@ -11,7 +11,7 @@ const Enquiry = require("../OpenService/enquiry.model.js");
 const Student = require("../StudentService/student.model.js");
 const GeneralInfo = require("../OpenService/generalInfo.model.js");
 
-//Authorization of admin
+//Authorization of center
 const centerAuth = require("./Middleware/centerAuth.js");
 
 //Request Handlers

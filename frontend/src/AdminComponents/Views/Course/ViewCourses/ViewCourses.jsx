@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { apiBaseURL } from "../../../../Config.js";
 import { DataGrid } from "@material-ui/data-grid"
+import { Link } from "react-router-dom";
+import Button from '@material-ui/core/Button';
 
 const columns = [
     { field: 'id', headerName: 'ID' },
@@ -24,6 +26,10 @@ export default function ViewCourses() {
 
     return (
         <div className="page">
+            <h1 style={{textAlign:"center"}}>Course List</h1>
+            <Button variant="outlined" size="large" color="primary" style={{margin:"5px"}} component={Link} to="/admin/course/new">
+                New Course
+            </Button>
             <div style={{ height: 700, width: '100%' }}>
                 <DataGrid
                     rows={courses}

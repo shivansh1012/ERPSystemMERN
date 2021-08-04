@@ -4,9 +4,7 @@ import {
     LineStyle,
     Timeline,
     PermIdentity,
-    Storefront,
     MailOutline,
-    DynamicFeed,
     WorkOutline,
     Report,
 } from "@material-ui/icons";
@@ -36,12 +34,6 @@ export default function Sidebar() {
                                 List Employees
                             </li>
                         </Link>
-                        <Link to="/center/employee/new" className="link">
-                            <li className="sidebarListItem">
-                                <Storefront className="sidebarIcon" />
-                                New Employee
-                            </li>
-                        </Link>
                     </ul>
                 </div>
                 <div className="sidebarMenu">
@@ -51,12 +43,6 @@ export default function Sidebar() {
                             <li className="sidebarListItem">
                                 <MailOutline className="sidebarIcon" />
                                 List Students
-                            </li>
-                        </Link>
-                        <Link to="/center/student/new" className="link">
-                            <li className="sidebarListItem">
-                                <DynamicFeed className="sidebarIcon" />
-                                New Student
                             </li>
                         </Link>
                     </ul>
@@ -70,14 +56,18 @@ export default function Sidebar() {
                                 Enquiries
                             </li>
                         </Link>
-                        <li className="sidebarListItem">
-                            <Timeline className="sidebarIcon" />
-                            Analytics
-                        </li>
-                        <li className="sidebarListItem">
-                            <WorkOutline className="sidebarIcon" />
-                            Reports
-                        </li>
+                        <Link to="/center/analytics" className="link">
+                            <li className="sidebarListItem">
+                                <Timeline className="sidebarIcon" />
+                                Analytics
+                            </li>
+                        </Link>
+                        <Link to="/center/report" className="link">
+                            <li className="sidebarListItem">
+                                <WorkOutline className="sidebarIcon" />
+                                Reports
+                            </li>
+                        </Link>
                     </ul>
                 </div>
             </div>

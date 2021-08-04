@@ -13,6 +13,7 @@ export default function Home() {
 
     return (
         <div className="page">
+            <h1 style={{textAlign:"center"}}>Home</h1>
             <h3>Version: {info.tag}</h3>
             <h3>Total Enquiries: {info.totalEnquiries}</h3>
             <h3>Pending Enquiries: {info.pendingEnquiries}</h3>

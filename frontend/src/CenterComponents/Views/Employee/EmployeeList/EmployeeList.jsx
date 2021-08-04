@@ -1,34 +1,66 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { apiBaseURL } from "../../../../Config";
-// import "./enquiryList.css";
-import { DataGrid } from "@material-ui/data-grid"
+import { Link } from "react-router-dom";
+import Button from '@material-ui/core/Button';
 
-const columns = [
-    { field: 'id', headerName: 'ID' },
-    { field: 'name', headerName: 'Name' , width: 200},
-    { field: 'email', headerName: 'Email' , width: 200},
-    { field: 'contactMobile', headerName: 'Mobile' , width: 200},
-    { field: 'address', headerName: 'Address' , width: 200},
-    { field: 'center', headerName: 'Center' , width: 200},
-]
+import { AgGridReact, AgGridColumn } from 'ag-grid-react';
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+import "ag-grid-enterprise"
 
 export default function EmployeeList() {
+    const [gridApi, setGridApi] = useState(null);
+    const [gridColumnApi, setGridColumnApi] = useState(null);
     const [employees, setEmployees] = useState([]);
 
     useEffect(() => {
         axios.get(`${apiBaseURL}/center/employee`).then((employeeList) => setEmployees(employeeList.data));
     }, []);
 
+    const onGridReady = (params) => {
+        setGridApi(params.api);
+        setGridColumnApi(params.columnApi);
+    };
+
+    const onCellValueChanged = (params) => {
+        console.log(params.data)
+        axios.patch(`${apiBaseURL}/service/enquiry`, params.data);
+    };
+
     return (
         <div className="page">
-            <div style={{ height: 700, width: '100%' }}>
-                <DataGrid
-                    rows={employees}
-                    columns={columns}
-                    pageSize={20}
-                    disableColumnMenu
-                />
+            <h1 style={{textAlign:"center"}}>Employee</h1>
+            <Button variant="outlined" size="large" color="primary" style={{margin:"5px"}} component={Link} to="/center/employee/new">
+                New Employee
+            </Button>
+            <div style={{ width: '100%', height: '100%' }}>
+                <div
+                    id="myGrid"
+                    style={{
+                        height: '100%',
+                        width: '100%',
+                    }}
+                    className="ag-theme-alpine">
+                    <AgGridReact
+                        rowData={employees}
+                        defaultColDef={{
+                            flex: 1,
+                            minWidth: 130,
+                            resizable: true,
+                        }}
+                        onGridReady={onGridReady}
+                        onCellValueChanged={onCellValueChanged}>
+
+                        <AgGridColumn field="id" />
+                        <AgGridColumn field="name" />
+                        <AgGridColumn field="email" />
+                        <AgGridColumn field="contactMobile" />
+                        <AgGridColumn field="address" />
+                        <AgGridColumn field="center" />
+
+                    </AgGridReact>
+                </div>
             </div>
         </div>
     )
