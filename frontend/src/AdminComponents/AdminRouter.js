@@ -1,6 +1,6 @@
 //Modules
 import React, { useContext } from "react";
-import { Route, useRouteMatch } from "react-router-dom";
+import { Route, useRouteMatch, Redirect } from "react-router-dom";
 import "../App.css";
 
 //Authorization
@@ -31,6 +31,8 @@ export default function Router() {
                     <Route exact path={`${path}`}>
                         <Login />
                     </Route>
+
+                    <Route render={() => <Redirect to={{pathname: `${path}`}} />} />
                 </>
             )}
         </>

@@ -32,6 +32,10 @@ const courseSchema = new mongoose.Schema({
     discount:{
         type: Number,
         default: 0,
+    },
+    net:{
+        type: Number,
+        default: 0,
     }
 })
 

@@ -24,6 +24,8 @@ export default function LoggedInRouter() {
             <Route exact path={`${path}/employee/new`}><NewEmployee /></Route>
 
             <Route exact path={`${path}/enquiry`}><EnquiryList /></Route>
+
+            {/* <Route render={() => <Redirect to={{pathname: `${path}`}} />} /> */}
         </>
     )
 }

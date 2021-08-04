@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import axios from "axios";
 
 import { AdminAuthContextProvider } from "./AdminComponents/AdminAuthContext";
@@ -17,13 +17,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/">
-          <IndexPage />
-        </Route>
+        <Route exact path="/" component={IndexPage} />
 
-        <Route path="/enquiryform">
-          <EnquiryForm />
-        </Route>
+        <Route path="/enquiryform" component={EnquiryForm}/>
 
         <Route path="/admin">
           <AdminAuthContextProvider>
@@ -36,6 +32,8 @@ export default function App() {
             <CenterRouter />
           </CenterAuthContextProvider>
         </Route>
+
+        <Route render={() => <Redirect to={{pathname: "/"}} />} />
       </Switch>
     </BrowserRouter>
   );

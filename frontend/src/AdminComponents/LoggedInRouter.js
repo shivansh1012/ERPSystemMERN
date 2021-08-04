@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, useRouteMatch } from "react-router-dom";
+import { Route, useRouteMatch, Redirect } from "react-router-dom";
 
 import Home from "./Views/Home/Home.jsx";
 
@@ -18,6 +18,7 @@ export default function LoggedInRouter() {
             <Route exact path={`${path}/center/new`}><AddCenter /></Route>
             <Route exact path={`${path}/courses`}><ViewCourses /></Route>
             <Route exact path={`${path}/Course/new`}><AddCourse /></Route>
+            <Route render={() => <Redirect to={{pathname: `${path}`}} />} />
         </>
     )
 }
