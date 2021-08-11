@@ -6,10 +6,15 @@ const AdminAuthContext = createContext();
 
 function AdminAuthContextProvider(props) {
   const [adminLoggedIn, setAdminLoggedIn] = useState(undefined);
+  const [adminName, setAdminName] = useState(undefined);
+  const [adminEmail, setAdminEmail] = useState(undefined);
 
   async function getAdminLoggedIn() {
     const loggedInRes = await axios.get(`${apiBaseURL}/admin/loggedIn`);
-    setAdminLoggedIn(loggedInRes.data);
+    // console.log(loggedInRes.data)
+    setAdminLoggedIn(loggedInRes.data.authorized);
+    setAdminName(loggedInRes.data.name);
+    setAdminEmail(loggedInRes.data.email);
   }
 
   useEffect(() => {
@@ -17,7 +22,7 @@ function AdminAuthContextProvider(props) {
   }, []);
 
   return (
-    <AdminAuthContext.Provider value={{ adminLoggedIn, getAdminLoggedIn }}>
+    <AdminAuthContext.Provider value={{ adminLoggedIn, adminName, adminEmail, getAdminLoggedIn }}>
       {props.children}
     </AdminAuthContext.Provider>
   );

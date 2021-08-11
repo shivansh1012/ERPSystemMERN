@@ -13,16 +13,16 @@ import Topbar from "./Layouts/Topbar/Topbar.jsx";
 import LoggedInRouter from "./LoggedInRouter";
 
 export default function Router() {
-    const { adminLoggedIn } = useContext(AdminAuthContext);
+    const { adminLoggedIn, adminName, adminEmail} = useContext(AdminAuthContext);
     const { path } = useRouteMatch();
     return (
         <>
             {adminLoggedIn === true && (
                 <>
-                    <Topbar />
+                    <Topbar adminName={adminName}/>
                     <div className="container">
-                        <Sidebar />
-                        <LoggedInRouter />
+                        <Sidebar/>
+                        <LoggedInRouter adminName={adminName} adminEmail={adminEmail}/>
                     </div>
                 </>
             )}

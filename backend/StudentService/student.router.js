@@ -4,8 +4,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 //Models
-const Course = require("../OpenService/course.model.js");
-const Student = require("./student.model.js");
+const Course = require("../Models/course.model.js");
+const Student = require("../Models/student.model.js");
 
 //Authorization of Student
 

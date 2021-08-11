@@ -5,8 +5,9 @@ import AdminAuthContext from "../../AdminAuthContext"
 import { apiBaseURL } from "../../../Config";
 import "./topbar.css";
 import { PowerSettingsNew } from "@material-ui/icons";
+import HomeIcon from '@material-ui/icons/Home';
 
-export default function Topbar() {
+export default function Topbar(props) {
     const { getAdminLoggedIn } = useContext(AdminAuthContext);
 
     const history = useHistory();
@@ -23,7 +24,11 @@ export default function Topbar() {
                     <span className="logo">ADMIN Management Portal</span>
                 </div>
                 <div className="topRight">
-                    <div className="topbarIconContainer" onClick={logout}>
+                    <div style={{margin:"20px"}}>{props.adminName}</div>
+                    <div style={{ margin: "20px" }} className="topbarIconContainer" onClick={()=>history.push("/")}>
+                        <HomeIcon />
+                    </div>
+                    <div style={{margin:"20px"}} className="topbarIconContainer" onClick={logout}>
                         <PowerSettingsNew />
                     </div>
                 </div>

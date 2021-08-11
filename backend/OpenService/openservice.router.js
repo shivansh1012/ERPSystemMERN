@@ -2,10 +2,10 @@
 const router = require("express").Router();
 
 //Models
-const Enquiry = require("./enquiry.model.js");
-const GeneralInfo = require("./generalInfo.model.js");
-const Center = require("../CenterService/center.model.js");
-const Course = require("./course.model.js");
+const Enquiry = require("../Models/enquiry.model.js");
+const GeneralInfo = require("../Models/generalInfo.model.js");
+const Center = require("../Models/center.model.js");
+const Course = require("../Models/course.model.js");
 
 
 //Request Handlers

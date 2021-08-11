@@ -12,13 +12,16 @@ import ViewCourses from "./Views/Course/ViewCourses/ViewCourses.jsx"
 import Manage from "./Views/Manage/Manage.jsx";
 import Analytics from "./Views/Analytics/Analytics.jsx";
 import Report from "./Views/Report/Report.jsx";
-export default function LoggedInRouter() {
+
+export default function LoggedInRouter(props) {
     const { path } = useRouteMatch();
     return (
         <>
-            <Route exact path={`${path}`}><Home /></Route>
+            <Route exact path={`${path}`}><Home adminName={props.adminName} adminEmail={props.adminEmail}/></Route>
+            
             <Route exact path={`${path}/centers`}><CenterReport /></Route>
             <Route exact path={`${path}/center/new`}><AddCenter /></Route>
+
             <Route exact path={`${path}/courses`}><ViewCourses /></Route>
             <Route exact path={`${path}/Course/new`}><AddCourse /></Route>
 

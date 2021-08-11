@@ -13,13 +13,13 @@ import Topbar from "./Layouts/Topbar/Topbar.jsx";
 import LoggedInRouter from "./LoggedInRouter";
 
 export default function CenterRouter() {
-    const { centerLoggedIn } = useContext(CenterAuthContext);
+    const { centerLoggedIn, employeeName, centerName } = useContext(CenterAuthContext);
     const { path } = useRouteMatch();
     return (
         <>
             {centerLoggedIn === true && (
                 <>
-                    <Topbar />
+                    <Topbar employeeName={employeeName} centerName={centerName}/>
                     <div className="container">
                         <Sidebar />
                         <LoggedInRouter />

@@ -4,11 +4,11 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 //Models
-const Course = require("../OpenService/course.model.js");
-const Employee = require("../CenterService/employees.model.js");
-const Center = require("../CenterService/center.model.js");
-const Admin = require("./admin.model.js")
-const GeneralInfo = require("../OpenService/generalInfo.model.js");
+const Course = require("../Models/course.model.js");
+const Employee = require("../Models/employees.model.js");
+const Center = require("../Models/center.model.js");
+const Admin = require("../Models/admin.model.js")
+const GeneralInfo = require("../Models/generalInfo.model.js");
 
 //Authorization of admin
 const adminAuth = require("./Middelware/adminAuth.js");
@@ -41,15 +41,7 @@ router.post("/register", async (req, res) => {
         });
 
         const savedAdmin = await newAdmin.save();
-
-        const token = jwt.sign({
-            user: savedAdmin._id,
-            email: savedAdmin.email
-        }, process.env.JWT_SECRET)
-
-        res.cookie("AdminToken", token, {
-            httpOnly: true
-        }).send();
+        res.sendStatus(200);
     } catch (e) {
         console.error(e);
         res.status(500).send();
@@ -172,12 +164,18 @@ router.get("/loggedIn", (req, res) => {
     console.log(req.originalUrl)
     try {
         const token = req.cookies.AdminToken;
-        if (!token) return res.json(false);
+        if (!token) return res.json({authorized: false});
         jwt.verify(token, process.env.JWT_SECRET);
 
-        res.send(true);
+        decodedToken = jwt.decode(token, process.env.JWT_SECRET);
+
+        res.json({
+            authorized: true,
+            name: decodedToken.email,
+            email: decodedToken.email
+        }).status(200);
     } catch (err) {
-        res.json(false);
+        res.json({authorized: false});
     }
 });
 

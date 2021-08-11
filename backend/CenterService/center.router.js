@@ -4,12 +4,12 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 //Models
-const Course = require("../OpenService/course.model.js");
-const Center = require("./center.model.js");
-const Employee = require("./employees.model.js");
-const Enquiry = require("../OpenService/enquiry.model.js");
-const Student = require("../StudentService/student.model.js");
-const GeneralInfo = require("../OpenService/generalInfo.model.js");
+const Course = require("../Models/course.model.js");
+const Center = require("../Models/center.model.js");
+const Employee = require("../Models/employees.model.js");
+const Enquiry = require("../Models/enquiry.model.js");
+const Student = require("../Models/student.model.js");
+const GeneralInfo = require("../Models/generalInfo.model.js");
 
 //Authorization of center
 const centerAuth = require("./Middleware/centerAuth.js");
@@ -36,6 +36,7 @@ router.post("/login", async (req, res) => {
 
         const token = jwt.sign({
             id: existingEmployee._id,
+            name: existingEmployee.name,
             email: existingEmployee.email,
             center: existingEmployee.center,
             permission: existingEmployee.permission,
@@ -140,12 +141,18 @@ router.get("/loggedIn", (req, res) => {
     console.log(req.originalUrl)
     try {
         const token = req.cookies.EmployeeToken;
-        if (!token) return res.json(false);
-        jwt.verify(token, process.env.JWT_SECRET);
-
-        res.send(true);
+        if (!token) return res.json({authorized: false});
+        decodedToken = jwt.decode(token, process.env.JWT_SECRET);
+        // console.log(decodedToken)
+        res.json({
+            authorized: true,
+            name: decodedToken.name,
+            email: decodedToken.email,
+            center: decodedToken.center,
+            permission: decodedToken.permission,
+        }).status(200);
     } catch (err) {
-        res.json(false);
+        res.json({authorized: false});
     }
 });
 
