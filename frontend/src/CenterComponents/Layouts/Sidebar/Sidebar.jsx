@@ -10,7 +10,7 @@ import {
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
-export default function Sidebar() {
+export default function Sidebar(props) {
     return (
         <div className="sidebar">
             <div className="sidebarWrapper">
@@ -25,7 +25,8 @@ export default function Sidebar() {
                         </Link>
                     </ul>
                 </div>
-                <div className="sidebarMenu">
+                {props.permission === 1 && (
+                    <div className="sidebarMenu">
                     <h3 className="sidebarTitle">Employees</h3>
                     <ul className="sidebarList">
                         <Link to="/center/employee" className="link">
@@ -36,6 +37,7 @@ export default function Sidebar() {
                         </Link>
                     </ul>
                 </div>
+                )}
                 <div className="sidebarMenu">
                     <h3 className="sidebarTitle">Student</h3>
                     <ul className="sidebarList">

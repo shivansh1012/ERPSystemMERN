@@ -110,12 +110,14 @@ router.post("/enquiry", async (req, res) => {
 router.patch("/enquiry", async (req, res) => {
     try {
         console.log(req.originalUrl)
-        
-
-        // const getEnquiry = await Enquiry.findOne({id:req.body.id});
-        // console.log(getEnquiry);
-        // console.log(req.body)
-        const updateEnquiry = await Enquiry.updateOne({id:req.body.id}, { status: req.body.status});
+        const generalInfo = await GeneralInfo.findOne({ tag: process.env.VERSION });
+        if (req.body.status === "Not Interested") {
+            // console.log("changes")
+            generalInfo.archivedEnquiries += 1;
+            generalInfo.pendingEnquiries -= 1;
+            const updateGeneralInfo = await GeneralInfo.updateOne({ tag: process.env.VERSION }, { archivedEnquiries: generalInfo.archivedEnquiries, pendingEnquiries: generalInfo.pendingEnquiries });
+        }
+        const updateEnquiry = await Enquiry.updateOne({ id: req.body.id }, { status: req.body.status });
         res.sendStatus(200);
     } catch (e) {
         console.error(e);
