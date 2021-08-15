@@ -100,14 +100,14 @@ router.post("/center", adminAuth, async (req, res) => {
             city: req.body.city,
             state: req.body.state,
             country: req.body.country,
-            employees: ["admin" + req.body.name + "@gmail.com"]
+            employees: ["admin" + req.body.name + process.env.DOMAIN_NAME]
         });
 
         const newEmployee = new Employee({
             id: "E" + generalInfo.totalEmployees,
             name: "admin" + req.body.name,
             permission: 1,
-            email: "admin" + req.body.name + "@gmail.com",
+            email: "admin" + req.body.name + process.env.DOMAIN_NAME,
             password: "admin1234",
             contactMobile: "admin",
             address: "admin",

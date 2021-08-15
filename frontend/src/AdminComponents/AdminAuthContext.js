@@ -11,7 +11,7 @@ function AdminAuthContextProvider(props) {
 
   async function getAdminLoggedIn() {
     const loggedInRes = await axios.get(`${apiBaseURL}/admin/loggedIn`);
-    console.log(loggedInRes.data)
+    // console.log(loggedInRes.data)
     setAdminLoggedIn(loggedInRes.data.authorized);
     setAdminName(loggedInRes.data.name);
     setAdminEmail(loggedInRes.data.email);

@@ -13,6 +13,8 @@ import Manage from "./Views/Manage/Manage.jsx";
 import Analytics from "./Views/Analytics/Analytics.jsx";
 import Report from "./Views/Report/Report.jsx";
 
+import AddChapters from "./Views/Course/AddChapters/AddChapters.jsx"
+
 export default function LoggedInRouter(props) {
     const { path } = useRouteMatch();
     return (
@@ -24,12 +26,13 @@ export default function LoggedInRouter(props) {
 
             <Route exact path={`${path}/courses`}><ViewCourses /></Route>
             <Route exact path={`${path}/Course/new`}><AddCourse /></Route>
+            <Route exact path={`${path}/Course/chapters`}><AddChapters /></Route>
 
             <Route exact path={`${path}/manage`}><Manage /></Route>
             <Route exact path={`${path}/analytics`}><Analytics /></Route>
             <Route exact path={`${path}/report`}><Report /></Route>
 
-            <Route render={() => <Redirect to={{pathname: `${path}`}} />} />
+            {/* <Route render={() => <Redirect to={{pathname: `${path}`}} />} /> */}
         </>
     )
 }

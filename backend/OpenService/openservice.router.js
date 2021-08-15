@@ -64,6 +64,39 @@ router.get("/course", async (req, res) => {
     }
 })
 
+router.get("/course/:id", async (req, res) => {
+    try {
+        console.log(req.originalUrl)
+        const courseID = req.params.id;
+
+        const courseList = await Course.find({"_id": courseID});
+
+
+        res.status(200).json(courseList);
+
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
+    }
+})
+
+router.post("/course/:id", async (req, res) => {
+    try {
+        console.log(req.originalUrl)
+        const courseID = req.params.id;
+        const chapterData = req.body.chapters;
+
+        // console.log(chapterData)
+
+        await Course.findOneAndUpdate({"_id": courseID}, {chapters: chapterData});
+        res.status(200).send();
+
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
+    }
+})
+
 router.get("/enquiry", async (req, res) => {
     try {
         console.log(req.originalUrl)

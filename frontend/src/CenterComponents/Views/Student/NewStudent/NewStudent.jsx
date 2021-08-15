@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import "./newStudent.css";
-import { TextField, Button } from "@material-ui/core";
 import axios from "axios";
 import { apiBaseURL } from "../../../../Config"
 
-import InputLabel from '@material-ui/core/InputLabel';
+import { makeStyles } from '@material-ui/core/styles';
+import { TextField, Button, InputLabel, InputAdornment, Input, FormControl } from "@material-ui/core";
 import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+const useStyles = makeStyles((theme) => ({
+    margin: {
+        margin: theme.spacing(1),
+    },
+}));
+
 export default function NewStudent() {
+    const classes = useStyles();
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
@@ -125,24 +131,33 @@ export default function NewStudent() {
                     </Select>
                 </FormControl>
 
-                <TextField
-                    fullWidth
-                    disabled={true}
-                    label="Fee"
-                    value={price}
-                />
-                <TextField
-                    fullWidth
-                    label="Discount"
-                    value={discount}
-                    onChange={calcNet}
-                />
-                <TextField
-                    fullWidth
-                    label="Net Amount"
-                    disabled={true}
-                    value={net}
-                />
+                <FormControl fullWidth className={classes.margin}>
+                    <InputLabel htmlFor="standard-adornment-amount">Price</InputLabel>
+                    <Input
+                        id="standard-adornment-amount"
+                        disabled={true}
+                        value={price}
+                        startAdornment={<InputAdornment position="start">₹</InputAdornment>}
+                    />
+                </FormControl>
+                <FormControl fullWidth className={classes.margin}>
+                    <InputLabel htmlFor="standard-adornment-discount">Discount</InputLabel>
+                    <Input
+                        id="standard-adornment-discount"
+                        value={discount}
+                        onChange={calcNet}
+                        endAdornment={<InputAdornment position="start">%</InputAdornment>}
+                    />
+                </FormControl>
+                <FormControl fullWidth className={classes.margin}>
+                    <InputLabel htmlFor="standard-adornment-amount">Net Amount</InputLabel>
+                    <Input
+                        id="standard-adornment-amount"
+                        disabled={true}
+                        value={net}
+                        startAdornment={<InputAdornment position="start">₹</InputAdornment>}
+                    />
+                </FormControl>
                 <TextField
                     fullWidth
                     label="Address"
