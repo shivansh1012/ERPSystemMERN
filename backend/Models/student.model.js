@@ -17,10 +17,6 @@ const studentSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    passwordHash:{
-        type: String,
-        required: true,
-    },
     center:{
         type: String,
         required: true,
@@ -36,7 +32,15 @@ const studentSchema = new mongoose.Schema({
     fees:{
         type: Number,
         required: true,
-    },  
+    },
+    feesPaid:{
+        type: Number,
+        required: true,
+    },
+    feesBalance:{
+        type: Number,
+        required: true,
+    },
 })
 
 const Student = mongoose.model("student", studentSchema);

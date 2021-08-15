@@ -87,8 +87,10 @@ router.post("/center", adminAuth, async (req, res) => {
         console.log(req.originalUrl)
 
         const generalInfo = await GeneralInfo.findOne({ tag: process.env.VERSION });
+
         generalInfo.totalCenters += 1;
         generalInfo.totalEmployees += 1;
+        
         const newCenter = new Center({
             id: "C" + generalInfo.totalCenters,
             name: req.body.name,
@@ -98,14 +100,14 @@ router.post("/center", adminAuth, async (req, res) => {
             city: req.body.city,
             state: req.body.state,
             country: req.body.country,
-            employees: ["admin" + req.body.name + "@mail.com"]
+            employees: ["admin" + req.body.name + "@gmail.com"]
         });
 
         const newEmployee = new Employee({
             id: "E" + generalInfo.totalEmployees,
             name: "admin" + req.body.name,
             permission: 1,
-            email: "admin" + req.body.name + "@mail.com",
+            email: "admin" + req.body.name + "@gmail.com",
             password: "admin1234",
             contactMobile: "admin",
             address: "admin",

@@ -1,48 +1,92 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./newStudent.css";
 import { TextField, Button } from "@material-ui/core";
 import axios from "axios";
-import {apiBaseURL} from "../../../../Config"
+import { apiBaseURL } from "../../../../Config"
+
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 export default function NewStudent() {
 
-    const [centerName, setCenterName] = useState('')
-    const [address, setAddress] = useState('')
+    const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [mobile, setMobile] = useState('')
+    const [course, setCourse] = useState(undefined)
+    const [selectedCourse, setSelectedCourse] = useState('')
+    const [price, setPrice] = useState(0);
+    const [fee, setFee] = useState(0);
+    const [discount, setDiscount] = useState(0);
+    const [net, setNet] = useState(0);
+    const [address, setAddress] = useState('')
     const [city, setCity] = useState('')
     const [state, setState] = useState('')
     const [country, setCountry] = useState('')
 
     async function Submit(e) {
         e.preventDefault();
-        if (!centerName || !email || !mobile || !address || !city || !state || !country) alert("Fill all the fields");
-        else {
-            var FormData = {
-                name: centerName,
-                contactEmail: email,
-                contactMobile: mobile,
-                address: address,
-                city: city,
-                state: state,
-                country: country,
-            }
-            axios
-                .post(`${apiBaseURL}/admin/center/new`, FormData, {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                })
-                .then((res) => {
-                    alert("Center Added")
-                })
-                .catch((err) => {
-                    console.log(err);
-                    alert("Error")
-                });
+        var FormData = {
+            name: name,
+            email: email,
+            mobile: mobile,
+            course: selectedCourse,
+            fee: fee,
+            discount: discount,
+            net: net,
+            address: address,
+            city: city,
+            state: state,
+            country: country,
         }
+        axios
+            .post(`${apiBaseURL}/center/student`, FormData, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            .then((res) => {
+                alert("Student Added")
+            })
+            .catch((err) => {
+                console.log(err);
+                alert("Error")
+            });
 
     }
+
+    const getCourseDetails = async () => {
+        await axios
+            .get(`${apiBaseURL}/service/course`)
+            .then((res) => {
+                setCourse(res.data)
+            })
+            .catch((err) => {
+                console.error(err);
+                alert(err)
+            })
+    }
+
+    function changeCourse(e) {
+        setSelectedCourse(e.target.value)
+        for (let dict in course) {
+            if (course[dict]["_id"] === e.target.value) {
+                setPrice(course[dict]["price"])
+                setNet(course[dict]["price"] - course[dict]["price"] * discount / 100)
+                break
+            }
+        }
+    }
+
+    function calcNet(e) {
+        setDiscount(e.target.value)
+        setNet(price - price * e.target.value / 100)
+    }
+
+    useEffect(() => {
+        getCourseDetails();
+    }, [])
 
     return (
         <div className="form page">
@@ -51,8 +95,8 @@ export default function NewStudent() {
                 <TextField
                     fullWidth
                     label="Full Name"
-                    value={centerName}
-                    onChange={(e) => setCenterName(e.target.value)}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                 />
                 <TextField
                     fullWidth
@@ -66,29 +110,38 @@ export default function NewStudent() {
                     value={mobile}
                     onChange={(e) => setMobile(e.target.value)}
                 />
+
+                <FormControl>
+                    <InputLabel id="course-select">Select Course</InputLabel>
+                    <Select
+                        labelId="course-select"
+                        id="course-select"
+                        value={selectedCourse}
+                        onChange={changeCourse}
+                    >
+                        {course !== undefined && course.map((cour) => (
+                            <MenuItem key={cour._id} value={cour._id}>{cour.title}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+
                 <TextField
                     fullWidth
-                    label="Courses"
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
-                />
-                <TextField
-                    fullWidth
+                    disabled={true}
                     label="Fee"
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
+                    value={price}
                 />
                 <TextField
                     fullWidth
                     label="Discount"
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
+                    value={discount}
+                    onChange={calcNet}
                 />
                 <TextField
                     fullWidth
                     label="Net Amount"
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
+                    disabled={true}
+                    value={net}
                 />
                 <TextField
                     fullWidth

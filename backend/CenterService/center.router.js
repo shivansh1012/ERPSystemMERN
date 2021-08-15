@@ -80,9 +80,13 @@ router.post("/employee", centerAuth, async (req, res) => {
         console.log(req.originalUrl)
         const center = req.cookies.EmployeeCenter
 
-        const generalInfo = await GeneralInfo.findOne({ tag: process.env.VERSION });
+        var generalInfo = await GeneralInfo.findOne({ tag: process.env.VERSION });
+        var centerInfo = await Center.findOne({ name: center });
 
         generalInfo.totalEmployees += 1;
+
+        centerInfo.totalEmployees += 1;
+        centerInfo.employees.push(req.body.email);
 
         const newEmployeeData = new Employee({
             id: "E" + generalInfo.totalEmployees,
@@ -94,9 +98,10 @@ router.post("/employee", centerAuth, async (req, res) => {
             center: center,
         })
 
-        const savedEmployee = await newEmployeeData.save();
-        const updateGeneralInfo = await GeneralInfo.updateOne({ tag: process.env.VERSION }, { totalEmployees: generalInfo.totalEmployees });
-
+        await newEmployeeData.save();
+        await GeneralInfo.updateOne({ tag: process.env.VERSION }, { totalEmployees: generalInfo.totalEmployees });
+        await Center.updateOne({ name: center }, { totalEmployees: centerInfo.totalEmployees, employees: centerInfo.employees });
+        
         res.status(200).json({ message: "success" });
     } catch (e) {
         console.error(e);
@@ -121,6 +126,9 @@ router.get("/student", async (req, res) => {
 router.post("/student", centerAuth, async (req, res) => {
     try {
         console.log(req.originalUrl)
+        const center = req.cookies.EmployeeCenter
+
+        var centerInfo = await Center.findOne({ name: center });
 
         res.status(200).json({ message: "success" });
     } catch (e) {
@@ -141,7 +149,7 @@ router.get("/loggedIn", (req, res) => {
     console.log(req.originalUrl)
     try {
         const token = req.cookies.EmployeeToken;
-        if (!token) return res.json({authorized: false});
+        if (!token) return res.json({ authorized: false });
         decodedToken = jwt.decode(token, process.env.JWT_SECRET);
         // console.log(decodedToken)
         res.json({
@@ -152,7 +160,7 @@ router.get("/loggedIn", (req, res) => {
             permission: decodedToken.permission,
         }).status(200);
     } catch (err) {
-        res.json({authorized: false});
+        res.json({ authorized: false });
     }
 });
 

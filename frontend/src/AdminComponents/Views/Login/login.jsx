@@ -44,19 +44,26 @@ export default function Login() {
 
     async function login(e) {
         e.preventDefault();
-        try {
-            const loginData = {
-                email,
-                password
-            }
-
-            await axios.post(`${apiBaseURL}/admin/login`, loginData);
-            await getAdminLoggedIn();
-            history.push("/admin");
-            
-        } catch (e) {
-            console.error(e);
+        const loginData = {
+            email,
+            password
         }
+
+        axios.post(`${apiBaseURL}/admin/login`, loginData, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then(async (res) => {
+                console.log(res)
+                await getAdminLoggedIn();
+                history.push("/admin");
+            })
+            .catch((err) => {
+                console.error(err);
+                console.log(err);
+                alert("Error")
+            });
     }
 
     return (
@@ -80,7 +87,7 @@ export default function Login() {
                         name="email"
                         autoComplete="email"
                         autoFocus
-                        value={email} 
+                        value={email}
                         onChange={(e) => { setEmail(e.target.value) }}
                     />
                     <TextField
@@ -93,7 +100,7 @@ export default function Login() {
                         type="password"
                         id="password"
                         autoComplete="current-password"
-                        value={password} 
+                        value={password}
                         onChange={(e) => { setPassword(e.target.value) }}
                     />
                     <Button
