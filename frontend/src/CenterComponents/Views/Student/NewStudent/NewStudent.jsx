@@ -23,7 +23,6 @@ export default function NewStudent() {
     const [course, setCourse] = useState(undefined)
     const [selectedCourse, setSelectedCourse] = useState('')
     const [price, setPrice] = useState(0);
-    const [fee, setFee] = useState(0);
     const [discount, setDiscount] = useState(0);
     const [net, setNet] = useState(0);
     const [address, setAddress] = useState('')
@@ -38,7 +37,6 @@ export default function NewStudent() {
             email: email,
             mobile: mobile,
             course: selectedCourse,
-            fee: fee,
             discount: discount,
             net: net,
             address: address,

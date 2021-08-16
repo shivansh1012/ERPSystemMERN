@@ -25,7 +25,7 @@ export default function Sidebar(props) {
                         </Link>
                     </ul>
                 </div>
-                {props.permission === 1 && (
+                {props.permissionLevel === 0 && (
                     <div className="sidebarMenu">
                     <h3 className="sidebarTitle">Employees</h3>
                     <ul className="sidebarList">

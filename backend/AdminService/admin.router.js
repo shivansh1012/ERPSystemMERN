@@ -17,7 +17,7 @@ const adminAuth = require("./Middelware/adminAuth.js");
 
 router.post("/register", async (req, res) => {
     try {
-        console.log(req.originalUrl)
+
         const { email, password } = req.body;
 
         if (!email || !password)
@@ -40,7 +40,8 @@ router.post("/register", async (req, res) => {
             passwordHash: passwordHash
         });
 
-        const savedAdmin = await newAdmin.save();
+        await newAdmin.save();
+
         res.sendStatus(200);
     } catch (e) {
         console.error(e);
@@ -50,7 +51,7 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
     try {
-        console.log(req.originalUrl)
+
 
         const { email, password } = req.body;
 
@@ -74,7 +75,7 @@ router.post("/login", async (req, res) => {
 
         res.cookie("AdminToken", token, {
             httpOnly: true
-        }).send();
+        }).status(200).send();
 
     } catch (e) {
         console.error(e);
@@ -84,40 +85,41 @@ router.post("/login", async (req, res) => {
 
 router.post("/center", adminAuth, async (req, res) => {
     try {
-        console.log(req.originalUrl)
-
         const generalInfo = await GeneralInfo.findOne({ tag: process.env.VERSION });
+
+        const { name, contactEmail, contactMobile, address, city, state, country } = req.body
 
         generalInfo.totalCenters += 1;
         generalInfo.totalEmployees += 1;
-        
+
         const newCenter = new Center({
             id: "C" + generalInfo.totalCenters,
-            name: req.body.name,
-            contactEmail: req.body.contactEmail,
-            contactMobile: req.body.contactMobile,
-            address: req.body.address,
-            city: req.body.city,
-            state: req.body.state,
-            country: req.body.country,
-            employees: ["admin" + req.body.name + process.env.DOMAIN_NAME]
+            name,
+            contactEmail,
+            contactMobile,
+            address,
+            city,
+            state,
+            country,
+            employees: ["admin" + name + process.env.DOMAIN_NAME]
         });
 
         const newEmployee = new Employee({
             id: "E" + generalInfo.totalEmployees,
-            name: "admin" + req.body.name,
-            permission: 1,
-            email: "admin" + req.body.name + process.env.DOMAIN_NAME,
+            name: "admin" + name,
+            employeeType: "Admin",
+            permissionLevel: 0,
+            email: "admin" + name + process.env.DOMAIN_NAME,
             password: "admin1234",
             contactMobile: "admin",
             address: "admin",
-            center: req.body.name
+            center: name
         })
-        generalInfo.centers.push(req.body.name);
+        generalInfo.centers.push(name);
 
-        const savedCenter = await newCenter.save();
-        const savedEmployee = await newEmployee.save();
-        const updateGeneralInfo = await GeneralInfo.updateOne({ tag: process.env.VERSION }, { totalCenters: generalInfo.totalCenters, centers: generalInfo.centers, totalEmployees: generalInfo.totalEmployees });
+        await newCenter.save();
+        await newEmployee.save();
+        await GeneralInfo.updateOne({ tag: process.env.VERSION }, { totalCenters: generalInfo.totalCenters, centers: generalInfo.centers, totalEmployees: generalInfo.totalEmployees });
 
         res.sendStatus(200);
     } catch (e) {
@@ -128,24 +130,24 @@ router.post("/center", adminAuth, async (req, res) => {
 
 router.post("/course", adminAuth, async (req, res) => {
     try {
-        console.log(req.originalUrl)
+        const { title, description, division, duration, preRequisites, price, discount } = req.body
 
         const generalInfo = await GeneralInfo.findOne({ tag: process.env.VERSION });
         generalInfo.totalCourses += 1;
 
         const newCourse = new Course({
             id: "Course" + generalInfo.totalCourses,
-            title: req.body.title,
-            description: req.body.description,
-            division: req.body.division,
-            duration: req.body.duration,
-            preRequisites: req.body.preRequisites,
-            price: req.body.price,
-            discount: req.body.discount
+            title,
+            description,
+            division,
+            duration,
+            preRequisites,
+            price,
+            discount
         })
 
-        const savedCourse = await newCourse.save();
-        const updateGeneralInfo = await GeneralInfo.updateOne({ tag: process.env.VERSION }, { totalCourses: generalInfo.totalCourses });
+        await newCourse.save();
+        await GeneralInfo.updateOne({ tag: process.env.VERSION }, { totalCourses: generalInfo.totalCourses });
 
         res.status(200).send();
     } catch (e) {
@@ -155,7 +157,7 @@ router.post("/course", adminAuth, async (req, res) => {
 })
 
 router.get("/logout", (req, res) => {
-    console.log(req.originalUrl)
+
     res.cookie("AdminToken", "", {
         httpOnly: true,
         expires: new Date(0)
@@ -163,10 +165,10 @@ router.get("/logout", (req, res) => {
 });
 
 router.get("/loggedIn", (req, res) => {
-    console.log(req.originalUrl)
+
     try {
         const token = req.cookies.AdminToken;
-        if (!token) return res.json({authorized: false});
+        if (!token) return res.json({ authorized: false });
         jwt.verify(token, process.env.JWT_SECRET);
 
         decodedToken = jwt.decode(token, process.env.JWT_SECRET);
@@ -177,7 +179,7 @@ router.get("/loggedIn", (req, res) => {
             email: decodedToken.email
         }).status(200);
     } catch (err) {
-        res.json({authorized: false});
+        res.status(400).json({ authorized: false }).send();
     }
 });
 

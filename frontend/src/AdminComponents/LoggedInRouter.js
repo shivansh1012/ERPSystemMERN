@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, useRouteMatch, Redirect } from "react-router-dom";
+import { Route, useRouteMatch } from "react-router-dom";
 
 import Home from "./Views/Home/Home.jsx";
 

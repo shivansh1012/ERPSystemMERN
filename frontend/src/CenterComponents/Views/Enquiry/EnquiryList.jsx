@@ -6,35 +6,15 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import "ag-grid-enterprise"
 
-// const columns = [
-//     { field: "id", headerName: "ID" },
-//     { field: 'name', headerName: 'Name', width: 200, editable: true },
-//     { field: 'enquiry', headerName: 'Enquiry', width: 200 },
-//     {
-//         field: 'status',
-//         headerName: 'Status',
-//         type: "singleSelect",
-//         valueOptions: ['Pending', 'Follow Back', 'Interested', 'Not Interested'],
-//         width: 200,
-//         editable: true,
-//     },
-//     { field: 'email', headerName: 'Email', width: 200 },
-//     { field: 'mobile', headerName: 'Mobile', width: 200 },
-//     { field: 'address', headerName: 'Address', width: 200 },
-//     { field: 'city', headerName: 'City', width: 200 },
-//     { field: 'state', headerName: 'State', width: 200 },
-//     { field: 'country', headerName: 'Country', width: 200 },
-// ]
-
 export default function EnquiryList() {
-    const [gridApi, setGridApi] = useState(null);
-    const [gridColumnApi, setGridColumnApi] = useState(null);
+    // const [gridApi, setGridApi] = useState(null);
+    // const [gridColumnApi, setGridColumnApi] = useState(null);
     const [enquiries, setEnquiries] = useState([]);
 
-    const onGridReady = (params) => {
-        setGridApi(params.api);
-        setGridColumnApi(params.columnApi);
-    };
+    // const onGridReady = (params) => {
+    //     setGridApi(params.api);
+    //     setGridColumnApi(params.columnApi);
+    // };
 
     const onCellValueChanged = (params) => {
         console.log(params.data)
@@ -66,7 +46,7 @@ export default function EnquiryList() {
                             minWidth: 130,
                             resizable: true,
                         }}
-                        onGridReady={onGridReady}
+                        // onGridReady={onGridReady}
                         onCellValueChanged={onCellValueChanged}>
 
                         {/* <AgGridColumn field="id" /> */}

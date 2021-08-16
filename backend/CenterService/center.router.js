@@ -18,9 +18,6 @@ const centerAuth = require("./Middleware/centerAuth.js");
 
 router.post("/login", async (req, res) => {
     try {
-        console.log(req.originalUrl)
-
-        // console.log(req)
         const { email, password } = req.body;
 
         if (!email || !password)
@@ -39,7 +36,7 @@ router.post("/login", async (req, res) => {
             name: existingEmployee.name,
             email: existingEmployee.email,
             center: existingEmployee.center,
-            permission: existingEmployee.permission,
+            permissionLevel: existingEmployee.permissionLevel,
         }, process.env.JWT_SECRET);
 
         res.cookie("EmployeeToken", token, {
@@ -48,11 +45,6 @@ router.post("/login", async (req, res) => {
             httpOnly: true
         }).cookie("EmployeeCenter", existingEmployee.center, {
             httpOnly: true
-        }).json({
-            name: existingEmployee.name,
-            email: existingEmployee.email,
-            center: existingEmployee.center,
-            permission: existingEmployee.permission,
         }).send();
 
     } catch (e) {
@@ -63,7 +55,7 @@ router.post("/login", async (req, res) => {
 
 router.get("/employee", async (req, res) => {
     try {
-        console.log(req.originalUrl)
+
         const center = req.cookies.EmployeeCenter
 
         const employeeList = await Employee.find({ center: center });
@@ -77,7 +69,8 @@ router.get("/employee", async (req, res) => {
 
 router.post("/employee", centerAuth, async (req, res) => {
     try {
-        console.log(req.originalUrl)
+        const { name, employeeType, permissionLevel, email, password, contactMobile, address } = req.body;
+
         const center = req.cookies.EmployeeCenter
 
         var generalInfo = await GeneralInfo.findOne({ tag: process.env.VERSION });
@@ -86,22 +79,24 @@ router.post("/employee", centerAuth, async (req, res) => {
         generalInfo.totalEmployees += 1;
 
         centerInfo.totalEmployees += 1;
-        centerInfo.employees.push(req.body.email);
+        centerInfo.employees.push(email);
 
         const newEmployeeData = new Employee({
             id: "E" + generalInfo.totalEmployees,
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password,
-            contactMobile: req.body.contactMobile,
-            address: req.body.address,
-            center: center,
+            name,
+            employeeType,
+            permissionLevel,
+            email,
+            password,
+            contactMobile,
+            address,
+            center,
         })
 
         await newEmployeeData.save();
         await GeneralInfo.updateOne({ tag: process.env.VERSION }, { totalEmployees: generalInfo.totalEmployees });
         await Center.updateOne({ name: center }, { totalEmployees: centerInfo.totalEmployees, employees: centerInfo.employees });
-        
+
         res.status(200).json({ message: "success" });
     } catch (e) {
         console.error(e);
@@ -111,7 +106,6 @@ router.post("/employee", centerAuth, async (req, res) => {
 
 router.get("/student", async (req, res) => {
     try {
-        console.log(req.originalUrl)
         const center = req.cookies.EmployeeCenter
 
         const studentList = await Student.find({ center: center });
@@ -125,7 +119,7 @@ router.get("/student", async (req, res) => {
 
 router.post("/student", centerAuth, async (req, res) => {
     try {
-        console.log(req.originalUrl)
+
         const center = req.cookies.EmployeeCenter
 
         var centerInfo = await Center.findOne({ name: center });
@@ -138,7 +132,7 @@ router.post("/student", centerAuth, async (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
-    console.log(req.originalUrl)
+
     res.cookie("EmployeeToken", "", {
         httpOnly: true,
         expires: new Date(0)
@@ -146,21 +140,23 @@ router.get("/logout", (req, res) => {
 });
 
 router.get("/loggedIn", (req, res) => {
-    console.log(req.originalUrl)
     try {
         const token = req.cookies.EmployeeToken;
+
         if (!token) return res.json({ authorized: false });
+
         decodedToken = jwt.decode(token, process.env.JWT_SECRET);
-        // console.log(decodedToken)
-        res.json({
+        const {name, email, center, permissionLevel } = decodedToken;
+
+        return res.json({
             authorized: true,
-            name: decodedToken.name,
-            email: decodedToken.email,
-            center: decodedToken.center,
-            permission: decodedToken.permission,
+            name,
+            email,
+            center,
+            permissionLevel,
         }).status(200);
     } catch (err) {
-        res.json({ authorized: false });
+        res.json({ authorized: false }).status(400).send();
     }
 });
 

@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import "./newEmployee.css";
-import { TextField, Button } from "@material-ui/core";
 import axios from "axios";
 import { apiBaseURL } from "../../../../Config"
 
+import { TextField, Button, InputLabel, FormControl } from "@material-ui/core";
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+
 export default function NewEmployee() {
     const [name, setName] = useState('')
+    const [employeeType, setEmployeeType] = useState('')
+    const [permissionLevel, setPermissionLevel] = useState('')
+
     const [address, setAddress] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -15,6 +21,8 @@ export default function NewEmployee() {
         e.preventDefault();
         var FormData = {
             name: name,
+            employeeType: employeeType,
+            permissionLevel: permissionLevel,
             email: email,
             password: password,
             contactMobile: mobile,
@@ -35,6 +43,14 @@ export default function NewEmployee() {
             });
     }
 
+    const setEmployeeLevel = (e) => {
+        setPermissionLevel(e.target.value);
+        if (e.target.value === 1) setEmployeeType("Dean")
+        else if (e.target.value === 2) setEmployeeType("Coordinator")
+        else if (e.target.value === 3) setEmployeeType("Staff")
+        else setEmployeeType("Faculty")
+    }
+
     return (
         <div className="form page">
             <h1>New Employee</h1>
@@ -45,6 +61,20 @@ export default function NewEmployee() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                 />
+                <FormControl>
+                    <InputLabel id="employee-type">Employee Type</InputLabel>
+                    <Select
+                        labelId="employee-type"
+                        id="employee-type"
+                        value={permissionLevel}
+                        onChange={setEmployeeLevel}
+                    >
+                        <MenuItem value={1}>Dean</MenuItem>
+                        <MenuItem value={2}>Coordinator</MenuItem>
+                        <MenuItem value={3}>Staff</MenuItem>
+                        <MenuItem value={4}>Faculty</MenuItem>
+                    </Select>
+                </FormControl>
                 <TextField
                     fullWidth
                     label="Login Email ID"

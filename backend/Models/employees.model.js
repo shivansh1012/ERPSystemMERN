@@ -9,9 +9,13 @@ const employeeSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    permission:{
+    employeeType:{
+        type: String,
+        required: true,
+    },
+    permissionLevel:{
         type: Number,
-        default:0
+        required: true,
     },
     email: {
         type: String,

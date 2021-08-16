@@ -7,21 +7,22 @@ import Button from '@material-ui/core/Button';
 import { AgGridReact, AgGridColumn } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-import "ag-grid-enterprise"
+// import "ag-grid-enterprise"
 
 export default function EmployeeList() {
-    const [gridApi, setGridApi] = useState(null);
-    const [gridColumnApi, setGridColumnApi] = useState(null);
+    // const [gridApi, setGridApi] = useState(null);
+    // const [gridColumnApi, setGridColumnApi] = useState(null);
     const [employees, setEmployees] = useState([]);
 
     useEffect(() => {
         axios.get(`${apiBaseURL}/center/employee`).then((employeeList) => setEmployees(employeeList.data));
     }, []);
 
-    const onGridReady = (params) => {
-        setGridApi(params.api);
-        setGridColumnApi(params.columnApi);
-    };
+    // const onGridReady = (params) => {
+    //     console.log(params)
+    //     setGridApi(params.api);
+    //     setGridColumnApi(params.columnApi);
+    // };
 
     const onCellValueChanged = (params) => {
         console.log(params.data)
@@ -49,11 +50,13 @@ export default function EmployeeList() {
                             minWidth: 130,
                             resizable: true,
                         }}
-                        onGridReady={onGridReady}
+                        // onGridReady={onGridReady}
                         onCellValueChanged={onCellValueChanged}>
 
                         <AgGridColumn field="id" />
                         <AgGridColumn field="name" />
+                        <AgGridColumn field="permissionLevel" />
+                        <AgGridColumn field="employeeType" />
                         <AgGridColumn field="email" />
                         <AgGridColumn field="contactMobile" />
                         <AgGridColumn field="address" />

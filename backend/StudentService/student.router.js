@@ -1,21 +1,13 @@
 //Modules
 const router = require("express").Router();
-const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 //Models
-const Course = require("../Models/course.model.js");
 const Student = require("../Models/student.model.js");
 
-//Authorization of Student
-
-
 //Request Handlers
-
 router.post("/login", async (req, res) => {
     try {
-        console.log(req.originalUrl)
-
         // const token = jwt.sign({
         //     text: "India"
         // }, process.env.JWT_SECRET);
@@ -24,7 +16,6 @@ router.post("/login", async (req, res) => {
         //     httpOnly: true
         // }).send();
 
-        // console.log(req)
         const { email, password } = req.body;
 
         if (!email || !password)
@@ -50,11 +41,6 @@ router.post("/login", async (req, res) => {
             httpOnly: true
         }).cookie("StudentCenter", existingStudent.center, {
             httpOnly: true
-        }).json({
-            name: existingStudent.name,
-            email: existingStudent.email,
-            center: existingStudent.center,
-            permission: existingStudent.permission,
         }).send();
 
     } catch (e) {
@@ -64,7 +50,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
-    console.log(req.originalUrl)
+
     res.cookie("StudentToken", "", {
         httpOnly: true,
         expires: new Date(0)
@@ -72,15 +58,16 @@ router.get("/logout", (req, res) => {
 });
 
 router.get("/loggedIn", (req, res) => {
-    console.log(req.originalUrl)
     try {
         const token = req.cookies.StudentToken;
-        if (!token) return res.json(false);
+
+        if (!token) return res.json({ authorized: false });
+
         jwt.verify(token, process.env.JWT_SECRET);
 
-        res.send(true);
+        res.json({ authorized: true }).status(200).send();
     } catch (err) {
-        res.json(false);
+        res.status(400).json({ authorized: false }).send();
     }
 });
 

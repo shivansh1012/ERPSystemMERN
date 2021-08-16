@@ -40,6 +40,10 @@ const courseSchema = new mongoose.Schema({
     chapters: {
         type: Array,
         default: [],
+    },
+    chapterCount: {
+        type: Number,
+        default: 0,
     }
 })
 

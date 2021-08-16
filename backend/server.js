@@ -16,6 +16,19 @@ app.use(cors({
     credentials: true,
 }));
 
+//logging middleware function
+let demoLogger = (req, res, next) => { 
+    let method = req.method;
+    let url = req.url;
+    let status = res.statusCode;
+    
+    let log = `${method}:${url}`;
+    console.log(log);
+    next();
+};
+
+app.use(demoLogger);
+
 //Links
 app.use(`/api/${process.env.VERSION}/admin`, require("./AdminService/admin.router.js"));
 app.use(`/api/${process.env.VERSION}/center`, require("./CenterService/center.router.js"));

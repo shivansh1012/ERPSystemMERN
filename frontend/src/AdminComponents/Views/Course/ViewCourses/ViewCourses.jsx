@@ -9,12 +9,13 @@ const columns = [
     { field: 'id', headerName: 'ID' },
     { field: 'title', headerName: 'Title' , width: 200},
     { field: 'description', headerName: 'Description' , width: 200},
+    { field: 'chapterCount', headerName: 'Total Chapters' , width: 200},
+    // { field: 'chapters', headerName: 'Chapters' , width: 500},
     // { field: 'division', headerName: 'Division' , width: 200},
     { field: 'duration', headerName: 'Duration' , width: 200},
     { field: 'preRequisites', headerName: 'PreRequisites' , width: 200},
     { field: 'price', headerName: 'Price' , width: 200},
     // { field: 'discount', headerName: 'Discount' , width: 200},
-    { field: "update", headerName: 'Update' , width: 200}
 ]
 
 
