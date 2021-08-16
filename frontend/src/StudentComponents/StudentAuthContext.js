@@ -9,7 +9,7 @@ function StudentAuthContextProvider(props) {
 
   async function getStudentLoggedIn() {
     const loggedInRes = await axios.get(`${apiBaseURL}/student/loggedIn`);
-    setStudentLoggedIn(loggedInRes.data);
+    setStudentLoggedIn(loggedInRes.data.authorized);
   }
 
   useEffect(() => {
