@@ -16,13 +16,13 @@ app.use(cors({
     credentials: true,
 }));
 
-//logging middleware function
+//logging middleware
 let demoLogger = (req, res, next) => { 
     let method = req.method;
     let url = req.url;
     let status = res.statusCode;
     
-    let log = `${method}:${url}`;
+    let log = `${method}:${url} -- ${status}`;
     console.log(log);
     next();
 };

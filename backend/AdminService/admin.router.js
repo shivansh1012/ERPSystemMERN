@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 
 //Models
 const Course = require("../Models/course.model.js");
-const Employee = require("../Models/employees.model.js");
+const Employee = require("../Models/employee.model.js");
 const Center = require("../Models/center.model.js");
 const Admin = require("../Models/admin.model.js")
 const GeneralInfo = require("../Models/generalInfo.model.js");
