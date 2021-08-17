@@ -34,4 +34,23 @@
   ```
   npm start
   ```
-* !The Client and Sercer has to run at the same time for it to work.
+* !The Client and Server has to run together for it to work.
+
+### Functioning
+
+* There are 3 categories -Admin
+                         -Center
+                         -Student
+
+* Admin - Can register a new Center
+        - Can create a new Course
+
+* Center - Can add Staff, Faculty
+         - Can admission Students
+         - Can Look at pending enquiries and edit thrie pending state
+         - Can create a new batch and add students to it
+         - Faculty can put attendance of students
+
+* Student - Can View Courses
+
+* Open Page - Enquire
