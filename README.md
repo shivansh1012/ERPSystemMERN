@@ -38,9 +38,9 @@
 
 ### Functioning
 
-* There are 3 categories -Admin
-                         -Center
-                         -Student
+* There are 3 categories -Admin  
+                         -Center  
+                         -Student  
 
 * Admin - Can register a new Center
         - Can create a new Course
