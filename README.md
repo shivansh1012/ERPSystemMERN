@@ -38,7 +38,7 @@
 
 ### Functioning
 
-* There are 3 categories 
+* There are 3 categories  
       -Admin  
       -Center  
       -Student  
@@ -54,7 +54,7 @@
       - Can create a new batch and add students to it  
       - Faculty can put attendance of students  
 
-* Student 
+* Student  
       - Can View Courses  
 
 * Open Page  
