@@ -21,14 +21,14 @@ router.post("/register", async (req, res) => {
         const { email, password } = req.body;
 
         if (!email || !password)
-            return res.status(400).json({ errorMessage: "Please enter all fields" });
+            return res.status(400).json({ message: "Please enter all fields" });
         if (password.length < 6)
-            return res.status(400).json({ errorMessage: "Please enter password of length more than 6 chars" });
+            return res.status(400).json({ message: "Please enter password of length more than 6 chars" });
 
         const existingAdmin = await Admin.findOne({ email: email });
 
         if (existingAdmin)
-            return res.status(400).json({ errorMessage: "User already exists" });
+            return res.status(400).json({ message: "User already exists" });
 
         //password hashing
         const salt = await bcrypt.genSalt();
@@ -51,58 +51,52 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
     try {
-
-
         const { email, password } = req.body;
 
         if (!email || !password)
-            return res.status(400).json({ errorMessage: "Please enter all fields" });
+            return res.status(400).json({ message: "Please enter all fields" });
 
         const existingAdmin = await Admin.findOne({ email: email });
 
         if (!existingAdmin)
-            return res.status(401).json({ errorMessage: "Invalid email or password" });
+            return res.status(401).json({ message: "Invalid email or password" });
 
         const isPasswordValid = bcrypt.compare(password, existingAdmin.passwordHash);
 
         if (!isPasswordValid)
-            return res.status(401).json({ errorMessage: "Invalid email or password" });
+            return res.status(401).json({ message: "Invalid email or password" });
 
-        const token = jwt.sign({
-            id: existingAdmin._id,
+        const adminToken = jwt.sign({
+            _id: existingAdmin._id,
+            name: existingAdmin.email,
             email: existingAdmin.email
         }, process.env.JWT_SECRET);
 
-        res.cookie("AdminToken", token, {
-            httpOnly: true
-        }).status(200).send();
+        res.status(200)
+            .cookie("AdminToken", adminToken, { httpOnly: true })
+            .json({ message: "Login Success" })
+            .send();
 
     } catch (e) {
         console.error(e);
-        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
+        res.status(500).json({ message: "Internal Server Error" }).send();
     }
 })
 
 router.post("/center", adminAuth, async (req, res) => {
     try {
-        const generalInfo = await GeneralInfo.findOne({ tag: process.env.VERSION });
-
-        const { name, contactEmail, contactMobile, address, city, state, country } = req.body
-
-        generalInfo.totalCenters += 1;
-        generalInfo.totalEmployees += 1;
-
-        const newCenter = new Center({
-            id: "C" + generalInfo.totalCenters,
-            name,
+        const { name,
             contactEmail,
             contactMobile,
             address,
             city,
             state,
-            country,
-            employees: ["admin" + name + process.env.DOMAIN_NAME]
-        });
+            country } = req.body
+
+        const generalInfo = await GeneralInfo.findOne({ tag: process.env.VERSION });
+
+        generalInfo.totalCenters += 1;
+        generalInfo.totalEmployees += 1;
 
         const newEmployee = new Employee({
             id: "E" + generalInfo.totalEmployees,
@@ -115,22 +109,41 @@ router.post("/center", adminAuth, async (req, res) => {
             address: "admin",
             center: name
         })
-        generalInfo.centers.push(name);
+
+        const newEmployeeData = await newEmployee.save();
+
+        const newCenter = new Center({
+            id: "C" + generalInfo.totalCenters,
+            name,
+            contactEmail,
+            contactMobile,
+            address,
+            city,
+            state,
+            country,
+            employees: [newEmployeeData._id]
+        });
 
         await newCenter.save();
-        await newEmployee.save();
-        await GeneralInfo.updateOne({ tag: process.env.VERSION }, { totalCenters: generalInfo.totalCenters, centers: generalInfo.centers, totalEmployees: generalInfo.totalEmployees });
 
-        res.sendStatus(200);
+        await GeneralInfo.updateOne({ tag: process.env.VERSION }, { totalCenters: generalInfo.totalCenters, totalEmployees: generalInfo.totalEmployees });
+
+        res.status(200).json({ message: "success" });
     } catch (e) {
         console.error(e);
-        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
+        res.status(500).json({ message: "Internal Server Error" }).send();
     }
 })
 
 router.post("/course", adminAuth, async (req, res) => {
     try {
-        const { title, description, division, duration, preRequisites, price, discount } = req.body
+        const { title,
+            description,
+            division,
+            duration,
+            preRequisites,
+            price,
+            discount } = req.body
 
         const generalInfo = await GeneralInfo.findOne({ tag: process.env.VERSION });
         generalInfo.totalCourses += 1;
@@ -149,10 +162,10 @@ router.post("/course", adminAuth, async (req, res) => {
         await newCourse.save();
         await GeneralInfo.updateOne({ tag: process.env.VERSION }, { totalCourses: generalInfo.totalCourses });
 
-        res.status(200).send();
+        res.status(200).json({ message: "success" });
     } catch (e) {
         console.error(e);
-        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
+        res.status(500).json({ message: "Internal Server Error" }).send();
     }
 })
 
@@ -164,23 +177,15 @@ router.get("/logout", (req, res) => {
     }).send();
 });
 
-router.get("/loggedIn", (req, res) => {
+router.get("/loggedIn", adminAuth, (req, res) => {
+    const { name, email } = req.adminInfo;
 
-    try {
-        const token = req.cookies.AdminToken;
-        if (!token) return res.json({ authorized: false });
-        jwt.verify(token, process.env.JWT_SECRET);
-
-        decodedToken = jwt.decode(token, process.env.JWT_SECRET);
-
-        res.json({
-            authorized: true,
-            name: decodedToken.email,
-            email: decodedToken.email
-        }).status(200);
-    } catch (err) {
-        res.status(400).json({ authorized: false }).send();
-    }
+    return res.json({
+        authorized: true,
+        message: "success",
+        name,
+        email
+    }).status(200);
 });
 
 module.exports = router;

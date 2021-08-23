@@ -11,7 +11,6 @@ const columns = [
     { field: 'email', headerName: 'Email' , width: 200},
     { field: 'contactMobile', headerName: 'Mobile' , width: 200},
     { field: 'address', headerName: 'Address' , width: 200},
-    { field: 'center', headerName: 'Center' , width: 200},
 ]
 
 export default function StudentList() {

@@ -27,12 +27,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AddChapters() {
     const classes = useStyles()
-
+    
+    const [selectedCourse, setSelectedCourse] = useState('')
     const [course, setCourse] = useState(undefined)
+
     const [inputFields, setInputFields] = useState([
         { id: uuidv4(), chapterNumber: '', chapterName: '' },
     ]);
-    const [selectedCourse, setSelectedCourse] = useState('')
 
 
     useEffect(() => {
@@ -54,7 +55,7 @@ export default function AddChapters() {
     const changeCourse = async (e) => {
         setSelectedCourse(e.target.value)
         await axios
-            .get(`${apiBaseURL}/service/course/${e.target.value}`)
+            .get(`${apiBaseURL}/service/course/?id=${e.target.value}`)
             .then((res) => {
                 // console.log(res.data[0])
                 if (res.data[0].chapters.length === 0) {

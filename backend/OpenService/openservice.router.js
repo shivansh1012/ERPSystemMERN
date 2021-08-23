@@ -7,7 +7,6 @@ const GeneralInfo = require("../Models/generalInfo.model.js");
 const Center = require("../Models/center.model.js");
 const Course = require("../Models/course.model.js");
 
-
 //Request Handlers
 router.get("/generalInfo", async (req, res) => {
     try {
@@ -47,20 +46,13 @@ router.get("/center", async (req, res) => {
 
 router.get("/course", async (req, res) => {
     try {
-        const courseList = await Course.find();
+        const courseID = req.query.id;
+        let courseList
 
-        res.status(200).json(courseList);
-    } catch (e) {
-        console.error(e);
-        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
-    }
-})
-
-router.get("/course/:id", async (req, res) => {
-    try {
-        const courseID = req.params.id;
-
-        const courseList = await Course.find({ "_id": courseID });
+        if(courseID)
+            courseList = await Course.find({ "_id": courseID });
+        else
+            courseList = await Course.find();
 
         res.status(200).json(courseList);
     } catch (e) {
@@ -96,7 +88,15 @@ router.get("/enquiry", async (req, res) => {
 
 router.post("/enquiry", async (req, res) => {
     try {
-        const { name, enquiry, email, mobile, address, city, state, country } = req.body;
+        const { name, 
+            enquiry, 
+            email, 
+            mobile, 
+            address, 
+            city, 
+            state, 
+            country } = req.body;
+            
         const generalInfo = await GeneralInfo.findOne({ tag: process.env.VERSION });
 
         generalInfo.totalEnquiries += 1;

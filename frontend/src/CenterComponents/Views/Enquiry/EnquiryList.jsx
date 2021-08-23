@@ -4,7 +4,7 @@ import { apiBaseURL } from "../../../Config";
 import { AgGridReact, AgGridColumn } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-import "ag-grid-enterprise"
+// import "ag-grid-enterprise"
 
 export default function EnquiryList() {
     // const [gridApi, setGridApi] = useState(null);
@@ -30,7 +30,7 @@ export default function EnquiryList() {
 
     return (
         <div className="page">
-            <h1 style={{textAlign:"center"}}>Enquiries</h1>
+            <h1 style={{textAlign:"center"}}>Enquiries <br/>(ag-grid-enterprise is commented on line 7) Uncomment it</h1>
             <div style={{ width: '100%', height: '100%' }}>
                 <div
                     id="myGrid"

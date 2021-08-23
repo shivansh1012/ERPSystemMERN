@@ -9,16 +9,24 @@ const batchSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    subjects: {
-        type: Array,
+    subject: {
+        type: String,
         required: true,
     },
     students: {
         type: Array,
         required: true,
     },
+    studentCount: {
+        type: Number,
+        required: true,
+    },
     faculty: {
-        type: Array,
+        type: String,
+        required: true,
+    },
+    center: {
+        type: String,
         required: true,
     },
     

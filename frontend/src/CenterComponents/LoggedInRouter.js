@@ -9,6 +9,9 @@ import StudentList from "./Views/Student/StudentList/StudentList.jsx";
 import NewEmployee from './Views/Employee/NewEmployee/NewEmployee.jsx';
 import EmployeeList from './Views/Employee/EmployeeList/EmployeeList.jsx';
 
+import NewBatch from './Views/Batch/NewBatch/NewBatch.jsx';
+import BatchList from './Views/Batch/BatchList/BatchList.jsx';
+
 import EnquiryList from './Views/Enquiry/EnquiryList.jsx';
 
 import Report from "./Views/Report/Report.jsx";
@@ -25,6 +28,9 @@ export default function LoggedInRouter() {
 
             <Route exact path={`${path}/employee`}><EmployeeList /></Route>
             <Route exact path={`${path}/employee/new`}><NewEmployee /></Route>
+
+            <Route exact path={`${path}/batch`}><BatchList /></Route>
+            <Route exact path={`${path}/batch/new`}><NewBatch /></Route>
 
             <Route exact path={`${path}/enquiry`}><EnquiryList /></Route>
 

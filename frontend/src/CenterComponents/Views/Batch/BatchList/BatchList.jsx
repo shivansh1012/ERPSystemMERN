@@ -8,13 +8,13 @@ import { AgGridReact, AgGridColumn } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
-export default function EmployeeList() {
+export default function BatchList() {
     // const [gridApi, setGridApi] = useState(null);
     // const [gridColumnApi, setGridColumnApi] = useState(null);
-    const [employees, setEmployees] = useState([]);
+    const [batches, setBatches] = useState([]);
 
     useEffect(() => {
-        axios.get(`${apiBaseURL}/center/employee`).then((employeeList) => setEmployees(employeeList.data));
+        axios.get(`${apiBaseURL}/center/batch`).then((batchList) => setBatches(batchList.data));
     }, []);
 
     // const onGridReady = (params) => {
@@ -25,9 +25,9 @@ export default function EmployeeList() {
 
     return (
         <div className="page">
-            <h1 style={{textAlign:"center"}}>Employee</h1>
-            <Button variant="outlined" size="large" color="primary" style={{margin:"5px"}} component={Link} to="/center/employee/new">
-                New Employee
+            <h1 style={{textAlign:"center"}}>Batches</h1>
+            <Button variant="outlined" size="large" color="primary" style={{margin:"5px"}} component={Link} to="/center/batch/new">
+                New Batch
             </Button>
             <div style={{ width: '100%', height: '100%' }}>
                 <div
@@ -38,7 +38,7 @@ export default function EmployeeList() {
                     }}
                     className="ag-theme-alpine">
                     <AgGridReact
-                        rowData={employees}
+                        rowData={batches}
                         defaultColDef={{
                             flex: 1,
                             minWidth: 130,
@@ -49,11 +49,9 @@ export default function EmployeeList() {
 
                         <AgGridColumn field="id" />
                         <AgGridColumn field="name" />
-                        <AgGridColumn field="permissionLevel" />
-                        <AgGridColumn field="employeeType" />
-                        <AgGridColumn field="email" />
-                        <AgGridColumn field="contactMobile" />
-                        <AgGridColumn field="address" />
+                        <AgGridColumn field="subjects" />
+                        <AgGridColumn field="studentCount" />
+                        <AgGridColumn field="faculty" />
 
                     </AgGridReact>
                 </div>

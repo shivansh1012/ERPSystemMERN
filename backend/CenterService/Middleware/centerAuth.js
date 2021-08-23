@@ -2,16 +2,17 @@ const jwt = require("jsonwebtoken");
 
 function centerAuth(req, res, next) {
   try {
-    const token = req.cookies.EmployeeToken;
-    if (!token) return res.status(401).json({ errorMessage: "Unauthorized" });
+    const employeeToken = req.cookies.EmployeeToken;
 
-    const verified = jwt.verify(token, process.env.JWT_SECRET);
-    req.EmployeeInfo = verified;
+    if (!employeeToken) 
+      return res.json({ authorized: false, message: "Unauthorized" });
+
+    req.employeeInfo = jwt.verify(employeeToken, process.env.JWT_SECRET);
 
     next();
   } catch (err) {
     console.error(err);
-    res.status(401).json({ errorMessage: "Unauthorized" });
+    res.json({ authorized: false, message: "Unauthorized" });
   }
 }
 

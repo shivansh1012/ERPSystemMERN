@@ -8,10 +8,6 @@ const generalInfoSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    centers: {
-        type: Array,
-        default:[]
-    },
     totalCourses:{
         type: Number,
         default: 0,

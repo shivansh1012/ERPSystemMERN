@@ -50,6 +50,17 @@ export default function Sidebar(props) {
                     </ul>
                 </div>
                 <div className="sidebarMenu">
+                    <h3 className="sidebarTitle">Batch</h3>
+                    <ul className="sidebarList">
+                        <Link to="/center/batch" className="link">
+                            <li className="sidebarListItem">
+                                <MailOutline className="sidebarIcon" />
+                                List Batches
+                            </li>
+                        </Link>
+                    </ul>
+                </div>
+                <div className="sidebarMenu">
                     <h3 className="sidebarTitle">Staff</h3>
                     <ul className="sidebarList">
                         <Link to="/center/enquiry" className="link">
