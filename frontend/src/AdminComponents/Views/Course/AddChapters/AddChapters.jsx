@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import Container from '@material-ui/core/Container';
-import IconButton from '@material-ui/core/IconButton';
-import RemoveIcon from '@material-ui/icons/Remove';
-import AddIcon from '@material-ui/icons/Add';
 import { v4 as uuidv4 } from 'uuid';
-
-import { makeStyles } from '@material-ui/core/styles';
-
 import axios from "axios";
 import { apiBaseURL } from "../../../../Config";
 
-import { TextField, Button, InputLabel, FormControl } from "@material-ui/core";
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import {
+    TextField,
+    Button,
+    InputLabel,
+    FormControl,
+    MenuItem,
+    Select,
+    Container,
+    IconButton
+} from "@material-ui/core";
+
+import { makeStyles } from '@material-ui/core/styles';
+
+import RemoveIcon from '@material-ui/icons/Remove';
+import AddIcon from '@material-ui/icons/Add';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -27,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AddChapters() {
     const classes = useStyles()
-    
+
     const [selectedCourse, setSelectedCourse] = useState('')
     const [course, setCourse] = useState(undefined)
 
@@ -75,8 +81,8 @@ export default function AddChapters() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         // console.log(inputFields);
-        for(let val =0 ; val< inputFields.length; val++){
-            if(inputFields[val]["chapterNumber"]==="" || inputFields[val]["chapterName"]==="")
+        for (let val = 0; val < inputFields.length; val++) {
+            if (inputFields[val]["chapterNumber"] === "" || inputFields[val]["chapterName"] === "")
                 inputFields.splice(val)
         }
         var FormData = {

@@ -7,22 +7,22 @@ import "../App.css";
 import AdminAuthContext from "./AdminAuthContext";
 
 //Components
-import Login from "./Views/Login/login.jsx";
+import Login from "./Views/Login/Login.jsx";
 import Sidebar from "./Layouts/Sidebar/Sidebar.jsx";
 import Topbar from "./Layouts/Topbar/Topbar.jsx";
 import LoggedInRouter from "./LoggedInRouter";
 
 export default function Router() {
-    const { adminLoggedIn, adminName, adminEmail} = useContext(AdminAuthContext);
+    const { adminLoggedIn } = useContext(AdminAuthContext);
     const { path } = useRouteMatch();
     return (
         <>
             {adminLoggedIn === true && (
                 <>
-                    <Topbar adminName={adminName}/>
+                    <Topbar />
                     <div className="container">
-                        <Sidebar/>
-                        <LoggedInRouter adminName={adminName} adminEmail={adminEmail}/>
+                        <Sidebar />
+                        <LoggedInRouter />
                     </div>
                 </>
             )}
@@ -32,7 +32,7 @@ export default function Router() {
                         <Login />
                     </Route>
 
-                    <Route render={() => <Redirect to={{pathname: `${path}`}} />} />
+                    <Route render={() => <Redirect to={{ pathname: `${path}` }} />} />
                 </>
             )}
         </>

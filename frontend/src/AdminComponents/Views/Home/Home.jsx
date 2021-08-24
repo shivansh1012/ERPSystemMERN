@@ -4,8 +4,8 @@ import { apiBaseURL } from "../../../Config";
 
 import FeaturedInfo from "./Components/FeaturedInfo.jsx"
 
-export default function Home(props) {
-    const [info, setInfo] = useState(["No Data"]);
+export default function Home() {
+    const [info, setInfo] = useState([]);
 
     useEffect(() => {
         axios.get(`${apiBaseURL}/service/generalinfo`).then((generalinfo) => {

@@ -5,7 +5,7 @@ import { apiBaseURL } from "../../../Config";
 import FeaturedInfo from "./Components/FeaturedInfo.jsx"
 
 export default function Home() {
-    const [info, setInfo] = useState(["No Data"]);
+    const [info, setInfo] = useState([]);
 
     useEffect(() => {
         axios.get(`${apiBaseURL}/service/generalinfo`).then((generalinfo) => {
@@ -15,9 +15,9 @@ export default function Home() {
 
     return (
         <div className="page">
-            <h1 style={{textAlign:"center"}}>Home</h1>
-            <h3 style={{textAlign:"center"}}>Version: {info.tag}</h3>
-            <FeaturedInfo title1={"Total Enquiries"} value1={info.totalEnquiries} title2={"Pending Enquiries"} value2={info.pendingEnquiries} title3={"Archived Enquiries"} value3={info.archivedEnquiries}/>
+            <h1 style={{ textAlign: "center" }}>Home</h1>
+            <h3 style={{ textAlign: "center" }}>Version: {info.tag}</h3>
+            <FeaturedInfo title1={"Total Enquiries"} value1={info.totalEnquiries} title2={"Pending Enquiries"} value2={info.pendingEnquiries} title3={"Archived Enquiries"} value3={info.archivedEnquiries} />
         </div>
     )
 }

@@ -18,8 +18,7 @@ export default function AddCourse() {
     const [division, setDivision] = useState('')
     const [duration, setDuration] = useState('')
     const [preRequisites, setPreRequisites] = useState('')
-    const [price, setPrice] = useState(0)
-    const [discount, setDiscount] = useState(0)
+    const [net, setNet] = useState(0)
 
     async function Submit(e) {
         e.preventDefault();
@@ -29,8 +28,7 @@ export default function AddCourse() {
             division: division,
             duration: duration,
             preRequisites: preRequisites,
-            price: price,
-            discount: discount
+            net: net
         }
         axios
             .post(`${apiBaseURL}/admin/course`, FormData, {
@@ -39,7 +37,7 @@ export default function AddCourse() {
                 },
             })
             .then((res) => {
-                alert("Course Added")
+                alert(res.data.message)
             })
             .catch((err) => {
                 console.log(err);
@@ -90,18 +88,9 @@ export default function AddCourse() {
                     <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
                     <Input
                         id="standard-adornment-amount"
-                        value={price}
-                        onChange={(e) => setPrice(e.target.value)}
+                        value={net}
+                        onChange={(e) => setNet(e.target.value)}
                         startAdornment={<InputAdornment position="start">₹</InputAdornment>}
-                    />
-                </FormControl>
-                <FormControl fullWidth className={classes.margin}>
-                    <InputLabel htmlFor="standard-adornment-discount">Discount</InputLabel>
-                    <Input
-                        id="standard-adornment-discount"
-                        value={discount}
-                        onChange={(e) => setDiscount(e.target.value)}
-                        endAdornment={<InputAdornment position="start">%</InputAdornment>}
                     />
                 </FormControl>
                 <Button color="primary" variant="outlined" onClick={Submit}>Add</Button>

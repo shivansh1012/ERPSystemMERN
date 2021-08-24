@@ -13,15 +13,15 @@ import Topbar from "./Layouts/Topbar/Topbar.jsx";
 import LoggedInRouter from "./LoggedInRouter";
 
 export default function CenterRouter() {
-    const { centerLoggedIn, employeeName, centerName, permissionLevel } = useContext(CenterAuthContext);
+    const { centerLoggedIn, permissionLevel } = useContext(CenterAuthContext);
     const { path } = useRouteMatch();
     return (
         <>
             {centerLoggedIn === true && (
                 <>
-                    <Topbar employeeName={employeeName} centerName={centerName}/>
+                    <Topbar />
                     <div className="container">
-                        <Sidebar permissionLevel={permissionLevel}/>
+                        <Sidebar permissionLevel={permissionLevel} />
                         <LoggedInRouter />
                     </div>
                 </>
@@ -32,12 +32,7 @@ export default function CenterRouter() {
                         <Login />
                     </Route>
 
-                    <Route render={() => <Redirect to={{pathname: `${path}`}} />} />
-                </>
-            )}
-            {centerLoggedIn === "error" && (
-                <>
-                    <div>Server Not Running</div>
+                    <Route render={() => <Redirect to={{ pathname: `${path}` }} />} />
                 </>
             )}
         </>

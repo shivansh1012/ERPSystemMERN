@@ -17,7 +17,6 @@ const adminAuth = require("./Middelware/adminAuth.js");
 
 router.post("/register", async (req, res) => {
     try {
-
         const { email, password } = req.body;
 
         if (!email || !password)
@@ -91,7 +90,7 @@ router.post("/center", adminAuth, async (req, res) => {
             address,
             city,
             state,
-            country } = req.body
+            country } = req.body;
 
         const generalInfo = await GeneralInfo.findOne({ tag: process.env.VERSION });
 
@@ -108,7 +107,7 @@ router.post("/center", adminAuth, async (req, res) => {
             contactMobile: "admin",
             address: "admin",
             center: name
-        })
+        });
 
         const newEmployeeData = await newEmployee.save();
 
@@ -128,7 +127,7 @@ router.post("/center", adminAuth, async (req, res) => {
 
         await GeneralInfo.updateOne({ tag: process.env.VERSION }, { totalCenters: generalInfo.totalCenters, totalEmployees: generalInfo.totalEmployees });
 
-        res.status(200).json({ message: "success" });
+        res.status(200).json({ message: "Success" });
     } catch (e) {
         console.error(e);
         res.status(500).json({ message: "Internal Server Error" }).send();
@@ -142,8 +141,7 @@ router.post("/course", adminAuth, async (req, res) => {
             division,
             duration,
             preRequisites,
-            price,
-            discount } = req.body
+            net } = req.body
 
         const generalInfo = await GeneralInfo.findOne({ tag: process.env.VERSION });
         generalInfo.totalCourses += 1;
@@ -155,14 +153,14 @@ router.post("/course", adminAuth, async (req, res) => {
             division,
             duration,
             preRequisites,
-            price,
-            discount
+            price:net,
+            net
         })
 
         await newCourse.save();
         await GeneralInfo.updateOne({ tag: process.env.VERSION }, { totalCourses: generalInfo.totalCourses });
 
-        res.status(200).json({ message: "success" });
+        res.status(200).json({ message: "Success" });
     } catch (e) {
         console.error(e);
         res.status(500).json({ message: "Internal Server Error" }).send();
@@ -182,7 +180,7 @@ router.get("/loggedIn", adminAuth, (req, res) => {
 
     return res.json({
         authorized: true,
-        message: "success",
+        message: "Success",
         name,
         email
     }).status(200);

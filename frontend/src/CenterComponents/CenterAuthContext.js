@@ -12,17 +12,13 @@ function CenterAuthContextProvider(props) {
   const [permissionLevel, setPermissionLevel] = useState(undefined);
 
   async function getCenterLoggedIn() {
-    try {
-      const loggedInRes = await axios.get(`${apiBaseURL}/center/loggedIn`);
-      setCenterLoggedIn(loggedInRes.data.authorized);
-      setEmployeeName(loggedInRes.data.name);
-      setEmployeeEmail(loggedInRes.data.email);
-      setCenterName(loggedInRes.data.center);
-      setPermissionLevel(loggedInRes.data.permissionLevel)
-    } catch (error) {
-      setCenterLoggedIn("error");
-    }
+    const loggedInRes = await axios.get(`${apiBaseURL}/center/loggedIn`);
 
+    setCenterLoggedIn(loggedInRes.data.authorized);
+    setEmployeeName(loggedInRes.data.name);
+    setEmployeeEmail(loggedInRes.data.email);
+    setCenterName(loggedInRes.data.center);
+    setPermissionLevel(loggedInRes.data.permissionLevel)
   }
 
   useEffect(() => {

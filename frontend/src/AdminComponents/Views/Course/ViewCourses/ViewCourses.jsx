@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { apiBaseURL } from "../../../../Config.js";
 import { DataGrid } from "@material-ui/data-grid"
 import { Link } from "react-router-dom";
-import Button from '@material-ui/core/Button';
+import { Button } from '@material-ui/core';
 
 const columns = [
     { field: 'id', headerName: 'ID' },
@@ -15,7 +15,8 @@ const columns = [
     { field: 'duration', headerName: 'Duration' , width: 200},
     { field: 'preRequisites', headerName: 'PreRequisites' , width: 200},
     { field: 'price', headerName: 'Price' , width: 200},
-    // { field: 'discount', headerName: 'Discount' , width: 200},
+    { field: 'discount', headerName: 'Discount' , width: 200},
+    { field: 'net', headerName: 'Net' , width: 200},
 ]
 
 
@@ -32,7 +33,7 @@ export default function ViewCourses() {
             <Button variant="outlined" size="large" color="primary" style={{margin:"5px"}} component={Link} to="/admin/course/new">
                 New Course
             </Button>
-            <Button variant="outlined" size="large" color="primary" style={{margin:"5px"}} component={Link} to="/admin/course/chapters">
+            <Button variant="outlined" size="large" color="primary" style={{margin:"5px"}} component={Link} to="/admin/course/chapter">
                 Update Chapters
             </Button>
             <div style={{ height: 700, width: '100%' }}>

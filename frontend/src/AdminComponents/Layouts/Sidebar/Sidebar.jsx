@@ -28,7 +28,7 @@ export default function Sidebar() {
                 <div className="sidebarMenu">
                     <h3 className="sidebarTitle">Center</h3>
                     <ul className="sidebarList">
-                        <Link to="/admin/centers" className="link">
+                        <Link to="/admin/center" className="link">
                             <li className="sidebarListItem">
                                 <Assessment className="sidebarIcon" />
                                 Center Report
@@ -39,7 +39,7 @@ export default function Sidebar() {
                 <div className="sidebarMenu">
                     <h3 className="sidebarTitle">Course</h3>
                     <ul className="sidebarList">
-                        <Link to="/admin/courses" className="link">
+                        <Link to="/admin/course" className="link">
                             <li className="sidebarListItem">
                                 <DynamicFeed className="sidebarIcon" />
                                 View Courses

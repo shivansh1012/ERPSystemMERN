@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import "./addCenter.css";
 import { TextField, Button } from "@material-ui/core";
 import axios from "axios";
-import {apiBaseURL} from "../../../../Config"
+import { apiBaseURL } from "../../../../Config"
 
 export default function AddCenter() {
 
@@ -34,7 +34,7 @@ export default function AddCenter() {
                     },
                 })
                 .then((res) => {
-                    alert("Center Added")
+                    alert(res.data.message)
                 })
                 .catch((err) => {
                     console.log(err);

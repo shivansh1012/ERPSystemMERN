@@ -51,7 +51,6 @@ router.post("/login", async (req, res) => {
 router.get("/batch", centerAuth, async (req, res) => {
     try {
         const center = req.employeeInfo.center;
-
         const batchList = await Batch.find({ center: center });
 
         res.status(200).json(batchList);
@@ -63,7 +62,7 @@ router.get("/batch", centerAuth, async (req, res) => {
 
 router.post("/batch", centerAuth, async (req, res) => {
     try {
-        res.status(200).json({ message: "success" });
+        res.status(200).json({ message: "Success" });
     } catch (e) {
         console.error(e);
         res.status(500).json({ message: "Internal Server Error" }).send();
@@ -126,17 +125,16 @@ router.post("/employee", centerAuth, async (req, res) => {
         await GeneralInfo.updateOne({ tag: process.env.VERSION }, { totalEmployees: generalInfo.totalEmployees });
         await Center.updateOne({ name: center }, { totalEmployees: centerInfo.totalEmployees, employees: centerInfo.employees });
 
-        res.status(200).json({ message: "success" });
+        res.status(200).json({ message: "Success" });
     } catch (e) {
         console.error(e);
         res.status(500).json({ message: "Internal Server Error" }).send();
     }
 });
 
-router.get("/student", async (req, res) => {
+router.get("/student", centerAuth, async (req, res) => {
     try {
-        const center = req.cookies.EmployeeCenter
-
+        const center = req.employeeInfo.center;
         const studentList = await Student.find({ center: center });
 
         res.status(200).json(studentList);
@@ -149,12 +147,11 @@ router.get("/student", async (req, res) => {
 
 router.post("/student", centerAuth, async (req, res) => {
     try {
-
-        const center = req.cookies.EmployeeCenter
+        const center = req.employeeInfo.center;
 
         var centerInfo = await Center.findOne({ name: center });
 
-        res.status(200).json({ message: "success" });
+        res.status(200).json({ message: "Success" });
     } catch (e) {
         console.error(e);
         res.status(500).json({ message: "Internal Server Error" }).send();
@@ -173,7 +170,7 @@ router.get("/loggedIn", centerAuth, (req, res) => {
 
     return res.json({
         authorized: true,
-        message: "success",
+        message: "Success",
         name,
         email,
         center,

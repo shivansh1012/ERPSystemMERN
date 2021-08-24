@@ -2,9 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import { apiBaseURL } from "../../../../Config"
 
-import { TextField, Button, InputLabel, FormControl } from "@material-ui/core";
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import {
+    TextField,
+    Button,
+    InputLabel,
+    FormControl,
+    MenuItem,
+    Select
+} from "@material-ui/core";
 
 export default function NewBatch() {
     const [name, setName] = useState('');
@@ -27,7 +32,7 @@ export default function NewBatch() {
                 },
             })
             .then((res) => {
-                alert("Batch Created")
+                alert(res.data.message)
             })
             .catch((err) => {
                 console.log(err);
@@ -105,9 +110,7 @@ export default function NewBatch() {
                         ))}
                     </Select>
                 </FormControl>
-
                 
-
                 <Button color="primary" variant="outlined" onClick={Submit}>Add</Button>
             </form>
         </div>

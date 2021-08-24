@@ -35,7 +35,7 @@ const courseSchema = new mongoose.Schema({
     },
     net:{
         type: Number,
-        default: 0,
+        required: true,
     },
     chapters: {
         type: Array,

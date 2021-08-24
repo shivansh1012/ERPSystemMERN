@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import "./newStudent.css";
 import axios from "axios";
 import { apiBaseURL } from "../../../../Config"
 
+import {
+    TextField,
+    Button,
+    InputLabel,
+    InputAdornment,
+    Input,
+    FormControl,
+    MenuItem,
+    Select
+} from "@material-ui/core";
+
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, Button, InputLabel, InputAdornment, Input, FormControl } from "@material-ui/core";
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+
+import "./newStudent.css";
 
 const useStyles = makeStyles((theme) => ({
     margin: {
@@ -51,7 +60,7 @@ export default function NewStudent() {
                 },
             })
             .then((res) => {
-                alert("Student Added")
+                alert(res.data.message)
             })
             .catch((err) => {
                 console.log(err);

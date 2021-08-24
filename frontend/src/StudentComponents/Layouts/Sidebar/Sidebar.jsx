@@ -6,7 +6,6 @@ import {
     PermIdentity,
     MailOutline,
     WorkOutline,
-    Report,
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
@@ -26,43 +25,37 @@ export default function Sidebar() {
                     </ul>
                 </div>
                 <div className="sidebarMenu">
-                    <h3 className="sidebarTitle">Employees</h3>
+                    <h3 className="sidebarTitle">Batch</h3>
                     <ul className="sidebarList">
-                        <Link to="/center/employee" className="link">
+                        <Link to="/student/batch" className="link">
                             <li className="sidebarListItem">
                                 <PermIdentity className="sidebarIcon" />
-                                List Employees
+                                My Batches
                             </li>
                         </Link>
                     </ul>
                 </div>
                 <div className="sidebarMenu">
-                    <h3 className="sidebarTitle">Student</h3>
+                    <h3 className="sidebarTitle">Fee</h3>
                     <ul className="sidebarList">
-                        <Link to="/center/student" className="link">
+                        <Link to="/student/fee" className="link">
                             <li className="sidebarListItem">
                                 <MailOutline className="sidebarIcon" />
-                                List Students
+                                Fee Status
                             </li>
                         </Link>
                     </ul>
                 </div>
                 <div className="sidebarMenu">
-                    <h3 className="sidebarTitle">Staff</h3>
+                    <h3 className="sidebarTitle">Misc</h3>
                     <ul className="sidebarList">
-                        <Link to="/center/enquiry" className="link">
-                            <li className="sidebarListItem">
-                                <Report className="sidebarIcon" />
-                                Enquiries
-                            </li>
-                        </Link>
-                        <Link to="/center/analytics" className="link">
+                        <Link to="/student/analytics" className="link">
                             <li className="sidebarListItem">
                                 <Timeline className="sidebarIcon" />
                                 Analytics
                             </li>
                         </Link>
-                        <Link to="/center/report" className="link">
+                        <Link to="/student/report" className="link">
                             <li className="sidebarListItem">
                                 <WorkOutline className="sidebarIcon" />
                                 Reports

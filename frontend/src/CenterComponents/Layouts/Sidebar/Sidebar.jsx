@@ -1,5 +1,5 @@
 import React from 'react';
-import "./sidebar.css";
+import { Link } from "react-router-dom";
 import {
     LineStyle,
     Timeline,
@@ -8,7 +8,8 @@ import {
     WorkOutline,
     Report,
 } from "@material-ui/icons";
-import { Link } from "react-router-dom";
+
+import "./sidebar.css";
 
 export default function Sidebar(props) {
     return (
@@ -27,16 +28,16 @@ export default function Sidebar(props) {
                 </div>
                 {props.permissionLevel === 0 && (
                     <div className="sidebarMenu">
-                    <h3 className="sidebarTitle">Employees</h3>
-                    <ul className="sidebarList">
-                        <Link to="/center/employee" className="link">
-                            <li className="sidebarListItem">
-                                <PermIdentity className="sidebarIcon" />
-                                List Employees
-                            </li>
-                        </Link>
-                    </ul>
-                </div>
+                        <h3 className="sidebarTitle">Employees</h3>
+                        <ul className="sidebarList">
+                            <Link to="/center/employee" className="link">
+                                <li className="sidebarListItem">
+                                    <PermIdentity className="sidebarIcon" />
+                                    List Employees
+                                </li>
+                            </Link>
+                        </ul>
+                    </div>
                 )}
                 <div className="sidebarMenu">
                     <h3 className="sidebarTitle">Student</h3>

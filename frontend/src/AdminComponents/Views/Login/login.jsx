@@ -4,14 +4,17 @@ import axios from "axios";
 import AdminAuthContext from "../../AdminAuthContext";
 import { apiBaseURL } from "../../../Config";
 
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
+import {
+    Avatar,
+    Button,
+    CssBaseline,
+    TextField,
+    Typography,
+    Container
+} from '@material-ui/core';
+
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -25,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.secondary.main,
     },
     form: {
-        width: '100%', // Fix IE 11 issue.
+        width: '100%',
         marginTop: theme.spacing(1),
     },
     submit: {
@@ -61,7 +64,6 @@ export default function Login() {
             })
             .catch((err) => {
                 console.error(err);
-                console.log(err);
                 alert("Error")
             });
     }
@@ -88,8 +90,7 @@ export default function Login() {
                         autoComplete="email"
                         autoFocus
                         value={email}
-                        onChange={(e) => { setEmail(e.target.value) }}
-                    />
+                        onChange={(e) => { setEmail(e.target.value) }} />
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -101,8 +102,7 @@ export default function Login() {
                         id="password"
                         autoComplete="current-password"
                         value={password}
-                        onChange={(e) => { setPassword(e.target.value) }}
-                    />
+                        onChange={(e) => { setPassword(e.target.value) }} />
                     <Button
                         type="submit"
                         fullWidth

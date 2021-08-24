@@ -2,73 +2,61 @@
 const router = require("express").Router();
 const jwt = require("jsonwebtoken");
 
+const studentAuth = require("./Middleware/studentAuth.js");
+
 //Models
 const Student = require("../Models/student.model.js");
 
 //Request Handlers
 router.post("/login", async (req, res) => {
     try {
-        // const token = jwt.sign({
-        //     text: "India"
-        // }, process.env.JWT_SECRET);
-
-        // res.cookie("StudentToken", token, {
-        //     httpOnly: true
-        // }).send();
-
         const { email, password } = req.body;
 
         if (!email || !password)
-            return res.status(400).json({ errorMessage: "Please enter all fields" });
+            return res.status(400).json({ message: "Please enter all fields" });
 
         const existingStudent = await Student.findOne({ email: email });
 
         if (!existingStudent)
-            return res.status(401).json({ errorMessage: "Invalid email or password" });
+            return res.status(401).json({ message: "Invalid email or password" });
 
         if (password != existingStudent.password)
-            return res.status(401).json({ errorMessage: "Invalid email or password" });
+            return res.status(401).json({ message: "Invalid email or password" });
 
         const token = jwt.sign({
-            id: existingStudent._id,
+            _id: existingStudent._id,
+            name: existingStudent.name,
             email: existingStudent.email,
             center: existingStudent.center,
         }, process.env.JWT_SECRET);
 
-        res.cookie("StudentToken", token, {
-            httpOnly: true
-        }).cookie("StudentName", existingStudent.name, {
-            httpOnly: true
-        }).cookie("StudentCenter", existingStudent.center, {
-            httpOnly: true
-        }).send();
-
+        res.status(200)
+            .cookie("StudentToken", token, { httpOnly: true })
+            .json({ message: "Login Success" })
+            .send();
     } catch (e) {
         console.error(e);
-        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
+        res.status(500).json({ message: "Internal Server Error" }).send();
     }
 });
 
 router.get("/logout", (req, res) => {
-
     res.cookie("StudentToken", "", {
         httpOnly: true,
         expires: new Date(0)
     }).send();
 });
 
-router.get("/loggedIn", (req, res) => {
-    try {
-        const token = req.cookies.StudentToken;
+router.get("/loggedIn", studentAuth, (req, res) => {
+    const { name, email, center } = req.studentInfo;
 
-        if (!token) return res.json({ authorized: false });
-
-        jwt.verify(token, process.env.JWT_SECRET);
-
-        res.json({ authorized: true }).status(200).send();
-    } catch (err) {
-        res.status(400).json({ authorized: false }).send();
-    }
+    return res.json({
+        authorized: true,
+        message: "success",
+        name,
+        email,
+        center
+    }).status(200);
 });
 
 module.exports = router;

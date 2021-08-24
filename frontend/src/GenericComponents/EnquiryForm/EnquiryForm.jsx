@@ -36,7 +36,8 @@ export default function AddCenter() {
                     },
                 })
                 .then((res) => {
-                    alert("Enquiry Sent")
+                    console.log(res)
+                    alert(res.data.message)
                 })
                 .catch((err) => {
                     console.log(err);

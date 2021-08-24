@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
-import "./newEmployee.css";
 import axios from "axios";
 import { apiBaseURL } from "../../../../Config"
 
-import { TextField, Button, InputLabel, FormControl } from "@material-ui/core";
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import {
+    TextField,
+    Button,
+    InputLabel,
+    FormControl,
+    Select,
+    MenuItem,
+} from "@material-ui/core";
+
+import "./newEmployee.css";
 
 export default function NewEmployee() {
     const [name, setName] = useState('')
     const [employeeType, setEmployeeType] = useState('')
     const [permissionLevel, setPermissionLevel] = useState('')
-
     const [address, setAddress] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -35,7 +40,7 @@ export default function NewEmployee() {
                 },
             })
             .then((res) => {
-                alert("Employee Added")
+                alert(res.data.message)
             })
             .catch((err) => {
                 console.log(err);

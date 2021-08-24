@@ -8,8 +8,8 @@ import { PowerSettingsNew} from "@material-ui/icons";
 import HomeIcon from '@material-ui/icons/Home';
 
 
-export default function Topbar(props) {
-    const { getCenterLoggedIn } = useContext(CenterAuthContext);
+export default function Topbar() {
+    const { getCenterLoggedIn, employeeName, centerName } = useContext(CenterAuthContext);
 
     const history = useHistory();
 
@@ -25,8 +25,8 @@ export default function Topbar(props) {
                     <span className="logo">CENTER Management Portal</span>
                 </div>
                 <div className="topRight">
-                    <div style={{ margin: "20px" }}>{props.employeeName}</div>
-                    <div style={{ margin: "20px" }}>{props.centerName}</div>
+                    <div style={{ margin: "20px" }}>{employeeName}</div>
+                    <div style={{ margin: "20px" }}>{centerName}</div>
                     <div style={{ margin: "20px" }} className="topbarIconContainer" onClick={()=>history.push("/")}>
                         <HomeIcon />
                     </div>

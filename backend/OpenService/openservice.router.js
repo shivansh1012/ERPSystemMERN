@@ -68,10 +68,10 @@ router.post("/course/:id", async (req, res) => {
 
         await Course.findOneAndUpdate({ "_id": courseID }, { chapters: chapterData, chapterCount: chapterData.length });
 
-        res.status(200).send();
+        res.status(200);
     } catch (e) {
         console.error(e);
-        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
+        res.status(500).json({ message: "Internal Server Error" });
     }
 })
 
@@ -82,7 +82,7 @@ router.get("/enquiry", async (req, res) => {
         res.status(200).json(enquiryList);
     } catch (e) {
         console.error(e);
-        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
+        res.status(500).json({ message: "Internal Server Error" });
     }
 });
 
@@ -117,10 +117,10 @@ router.post("/enquiry", async (req, res) => {
         await newEnquiry.save();
         await GeneralInfo.updateOne({ tag: process.env.VERSION }, { totalEnquiries: generalInfo.totalEnquiries, pendingEnquiries: generalInfo.pendingEnquiries });
 
-        res.sendStatus(200);
+        res.status(200).json({ message: "Success" });
     } catch (e) {
         console.error(e);
-        res.status(500).send();
+        res.status(500).json({ message: "Internal Server Error" }).send();
     }
 })
 
@@ -135,10 +135,10 @@ router.patch("/enquiry", async (req, res) => {
         }
         await Enquiry.updateOne({ id: req.body.id }, { status: req.body.status });
 
-        res.sendStatus(200);
+        res.status(200).json({ message: "Success" });
     } catch (e) {
         console.error(e);
-        res.status(500).send();
+        res.status(500).json({ message: "Internal Server Error" }).send();
     }
 })
 
