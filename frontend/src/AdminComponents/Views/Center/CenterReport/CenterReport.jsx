@@ -10,6 +10,8 @@ const columns = [
     { field: 'name', headerName: 'Name', width: 200 },
     { field: 'contactEmail', headerName: 'Contact Email', width: 200 },
     { field: 'contactMobile', headerName: 'Contact Mobile', width: 200 },
+    { field: 'adminLogin', headerName: 'Center Admin Login ID', width: 200 },
+    { field: 'adminPassword', headerName: 'Center Admin Login Password', width: 250 },
     { field: 'address', headerName: 'Address', width: 200 },
     { field: 'city', headerName: 'City', width: 200 },
     { field: 'state', headerName: 'State', width: 200 },

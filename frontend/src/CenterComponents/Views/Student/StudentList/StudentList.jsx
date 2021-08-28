@@ -10,6 +10,7 @@ const columns = [
     { field: 'uid', headerName: 'UID' },
     { field: 'name', headerName: 'Name', width: 200 },
     { field: 'email', headerName: 'Email', width: 200 },
+    { field: 'password', headerName: 'Password', width: 200 },
     { field: 'phone', headerName: 'Mobile', width: 200 },
     { field: 'fee', headerName: 'Fee', width: 200 },
     { field: 'discount', headerName: 'Discount', width: 200 },

@@ -17,6 +17,14 @@ const centerSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    adminLogin: {
+        type: String,
+        required: true,
+    },
+    adminPassword: {
+        type: String,
+        default: "admin1234"
+    },
     address:{
         type: String,
         required: true,

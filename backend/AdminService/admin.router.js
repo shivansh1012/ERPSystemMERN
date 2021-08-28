@@ -96,13 +96,13 @@ router.post("/center", adminAuth, async (req, res) => {
 
         generalInfo.centerCount += 1;
         generalInfo.employeeCount += 1;
-
+        const centerUid = "C" + generalInfo.centerCount;
         const newEmployee = new Employee({
             uid: "E" + generalInfo.employeeCount,
             name: "admin" + name,
             employeeType: "Admin",
             permissionLevel: 0,
-            email: "admin" + name + process.env.DOMAIN_NAME,
+            email: "admin" + centerUid + process.env.DOMAIN_NAME,
             password: "admin1234",
             contactMobile: "admin",
             address: "admin",
@@ -116,6 +116,7 @@ router.post("/center", adminAuth, async (req, res) => {
             name,
             contactEmail,
             contactMobile,
+            adminLogin: "admin" + centerUid + process.env.DOMAIN_NAME,
             address,
             city,
             state,

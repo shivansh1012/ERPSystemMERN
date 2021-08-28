@@ -34,7 +34,7 @@ export default function AddCenter() {
                     },
                 })
                 .then((res) => {
-                    alert(res.data.message)
+                    alert(`${res.data.message} : Center Login and password in Center Report Tab`)
                 })
                 .catch((err) => {
                     console.log(err);

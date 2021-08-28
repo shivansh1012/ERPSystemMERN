@@ -52,6 +52,7 @@ export default function EmployeeList() {
                         <AgGridColumn field="permissionLevel" />
                         <AgGridColumn field="employeeType" />
                         <AgGridColumn field="email" />
+                        <AgGridColumn field="password" />
                         <AgGridColumn field="contactMobile" />
                         <AgGridColumn field="address" />
 
