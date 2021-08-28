@@ -8,7 +8,8 @@
   ```
   npm i
   ```
-      in backend and frontend folders.
+  
+in backend and frontend folders.
 ### Executing program
 
 * To start server, Go  in ./backend and execute
