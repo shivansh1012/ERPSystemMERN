@@ -32,6 +32,11 @@ export default function IndexPage() {
                     Admin
                 </Button>
             </div>
+            <div className="positions">
+                <Button variant="outlined" size="large" color="primary" className={classes.margin} component={Link} to="/init">
+                    Click if Running First Time on new Machine
+                </Button>
+            </div>
             
         </div>
     )

@@ -22,8 +22,6 @@ in backend and frontend folders.
   ```
 * !The Client and Server has to run together for it to work.
 
-* Go to http://localhost:3000/init on browser and click Init Resources Button(this initilizes admin and db in mongodb)
-
 ### Functioning
 
 * There are 3 categories  
