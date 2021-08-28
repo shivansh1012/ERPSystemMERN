@@ -4,8 +4,11 @@
 
 ### Installing
 
-* After cloning the repository run command "npm i" in backend and frontend folders.
-
+* After cloning the repository run command 
+  ```
+  npm i
+  ```
+      in backend and frontend folders.
 ### Executing program
 
 * To start server, Go  in ./backend and execute
