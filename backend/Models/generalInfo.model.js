@@ -1,22 +1,26 @@
 const mongoose = require("mongoose");
 
 const generalInfoSchema = new mongoose.Schema({
-    tag:{
+    version:{
         type: String,
     },
-    totalCenters:{
+    centerCount:{
         type: Number,
         default: 0,
     },
-    totalCourses:{
+    courseCount:{
         type: Number,
         default: 0,
     },
-    totalEmployees:{
+    batchCount:{
         type: Number,
         default: 0,
     },
-    totalStudents:{
+    employeeCount:{
+        type: Number,
+        default: 0,
+    },
+    studentCount:{
         type: Number,
         default: 0,
     },

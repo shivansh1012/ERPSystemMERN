@@ -47,7 +47,7 @@ export default function EmployeeList() {
                         // onGridReady={onGridReady}
                         >
 
-                        <AgGridColumn field="id" />
+                        <AgGridColumn field="uid" headerName="UID"/>
                         <AgGridColumn field="name" />
                         <AgGridColumn field="permissionLevel" />
                         <AgGridColumn field="employeeType" />

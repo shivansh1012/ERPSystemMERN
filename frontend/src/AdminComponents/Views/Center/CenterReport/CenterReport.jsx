@@ -6,15 +6,15 @@ import { Link } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 
 const columns = [
-    { field: 'id', headerName: 'ID' },
-    { field: 'name', headerName: 'Name' , width: 200},
-    { field: 'contactEmail', headerName: 'Contact Email' , width: 200},
-    { field: 'contactMobile', headerName: 'Contact Mobile' , width: 200},
-    { field: 'address', headerName: 'Address' , width: 200},
-    { field: 'city', headerName: 'City' , width: 200},
-    { field: 'state', headerName: 'State' , width: 200},
-    { field: 'enrolledStudents', headerName: 'Students' , width: 200},
-    { field: 'totalEmployees', headerName: 'Employees' , width: 200},
+    { field: 'uid', headerName: 'UID' },
+    { field: 'name', headerName: 'Name', width: 200 },
+    { field: 'contactEmail', headerName: 'Contact Email', width: 200 },
+    { field: 'contactMobile', headerName: 'Contact Mobile', width: 200 },
+    { field: 'address', headerName: 'Address', width: 200 },
+    { field: 'city', headerName: 'City', width: 200 },
+    { field: 'state', headerName: 'State', width: 200 },
+    { field: 'enrolledStudents', headerName: 'Students', width: 200 },
+    { field: 'totalEmployees', headerName: 'Employees', width: 200 },
 ]
 
 export default function CenterReport() {
@@ -26,12 +26,13 @@ export default function CenterReport() {
 
     return (
         <div className="page">
-            <h1 style={{textAlign:"center"}}>Center List</h1>
-            <Button variant="outlined" size="large" color="primary" style={{margin:"5px"}} component={Link} to="/admin/center/new">
+            <h1 style={{ textAlign: "center" }}>Center List</h1>
+            <Button variant="outlined" size="large" color="primary" style={{ margin: "5px" }} component={Link} to="/admin/center/new">
                 New Center
             </Button>
             <div style={{ height: 700, width: '100%' }}>
                 <DataGrid
+                    getRowId={(centers) => centers._id}
                     rows={centers}
                     columns={columns}
                     pageSize={20}

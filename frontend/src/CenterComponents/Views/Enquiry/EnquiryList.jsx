@@ -7,30 +7,32 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 // import "ag-grid-enterprise"
 
 export default function EnquiryList() {
-    // const [gridApi, setGridApi] = useState(null);
-    // const [gridColumnApi, setGridColumnApi] = useState(null);
     const [enquiries, setEnquiries] = useState([]);
 
-    // const onGridReady = (params) => {
-    //     setGridApi(params.api);
-    //     setGridColumnApi(params.columnApi);
-    // };
-
     const onCellValueChanged = (params) => {
-        console.log(params.data)
-        axios.patch(`${apiBaseURL}/service/enquiry`, params.data);
+        const data = {
+            _id: params.data._id,
+            oldValue: params.oldValue,
+            newValue: params.newValue,
+        }
+        axios.patch(`${apiBaseURL}/service/enquiry`, data);
     };
 
+    const getEnquiryList = async () => {
+        await axios
+            .get(`${apiBaseURL}/service/enquiry`)
+            .then((enquiriesList) => {
+                setEnquiries(enquiriesList.data)
+            });
+    }
+
     useEffect(() => {
-        axios.get(`${apiBaseURL}/service/enquiry`).then((enquiriesList) => {
-            // console.log(enquiriesList)
-            setEnquiries(enquiriesList.data)
-        });
+        getEnquiryList();
     }, []);
 
     return (
         <div className="page">
-            <h1 style={{textAlign:"center"}}>Enquiries <br/>(ag-grid-enterprise is commented on line 7) Uncomment it</h1>
+            <h1 style={{ textAlign: "center" }}>Enquiries <br />(ag-grid-enterprise is commented on line 7) Uncomment it</h1>
             <div style={{ width: '100%', height: '100%' }}>
                 <div
                     id="myGrid"
@@ -46,10 +48,8 @@ export default function EnquiryList() {
                             minWidth: 130,
                             resizable: true,
                         }}
-                        // onGridReady={onGridReady}
                         onCellValueChanged={onCellValueChanged}>
 
-                        {/* <AgGridColumn field="id" /> */}
                         <AgGridColumn field="name" />
                         <AgGridColumn field="enquiry" />
                         <AgGridColumn

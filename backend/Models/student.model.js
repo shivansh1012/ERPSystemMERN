@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const studentSchema = new mongoose.Schema({
-    id: {
+    uid: {
         type: String,
         required: true,
     },
@@ -13,35 +13,63 @@ const studentSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    password: {
+        type: String,
+        required: true,
+    },
     phone: {
         type: String,
         required: true,
     },
-    center:{
+    center: {
         type: String,
         required: true,
     },
-    enrollmentDate:{
+    enrollmentDate: {
         type: Date,
-        required: true,
+        default: Date.now,
     },
-    enrolledSubject:{
+    enrolledCourse: {
         type: Array,
-        required: true,
+        default: [],
     },
-    fees:{
+    fee: {
         type: Number,
         required: true,
     },
-    feesPaid:{
+    discount: {
+        type: Number,
+        default: 0,
+    },
+    netFee: {
         type: Number,
         required: true,
     },
-    feesBalance:{
+    paymentType: {
+        type: String,
+        required: true,
+    },
+    paymentDetail: {
+        type: Map,
+        required: true,
+    },
+    feePaid: {
         type: Number,
         required: true,
     },
-})
+    feeBalance: {
+        type: Number,
+        required: true,
+    },
+    address: {
+        type: String,
+        required: true,
+    },
+    batchList:{
+        type: Array,
+        default : [],
+    }
+});
 
 const Student = mongoose.model("student", studentSchema, "student");
 

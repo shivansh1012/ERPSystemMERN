@@ -41,22 +41,21 @@ export default function AddChapters() {
         { id: uuidv4(), chapterNumber: '', chapterName: '' },
     ]);
 
-
+    const getCourseDetails = async () => {
+        await axios
+        .get(`${apiBaseURL}/service/course`)
+        .then((res) => {
+            setCourse(res.data)
+        })
+        .catch((err) => {
+            console.error(err);
+            alert(err)
+        })
+    }
+    
     useEffect(() => {
         getCourseDetails();
     }, [])
-
-    const getCourseDetails = async () => {
-        await axios
-            .get(`${apiBaseURL}/service/course`)
-            .then((res) => {
-                setCourse(res.data)
-            })
-            .catch((err) => {
-                console.error(err);
-                alert(err)
-            })
-    }
 
     const changeCourse = async (e) => {
         setSelectedCourse(e.target.value)
@@ -95,7 +94,7 @@ export default function AddChapters() {
                 },
             })
             .then((res) => {
-                alert("Course Chapters Updated")
+                alert(res.data.message)
             })
             .catch((err) => {
                 console.log(err);

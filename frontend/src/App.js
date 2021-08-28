@@ -12,6 +12,7 @@ import StudentRouter from "./StudentComponents/StudentRouter.js";
 
 import EnquiryForm from "./GenericComponents/EnquiryForm/EnquiryForm.jsx";
 import IndexPage from "./GenericComponents/IndexPage/IndexPage.jsx";
+import InitPortal from "./GenericComponents/InitPortal.jsx"
 
 axios.defaults.withCredentials = true;
 
@@ -23,6 +24,8 @@ export default function App() {
         <Route exact path="/" component={IndexPage} />
 
         <Route path="/enquiryform" component={EnquiryForm}/>
+
+        <Route path="/init" component={InitPortal}/>
 
         <Route path="/admin">
           <AdminAuthContextProvider>

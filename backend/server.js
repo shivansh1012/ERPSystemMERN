@@ -20,9 +20,8 @@ app.use(cors({
 let demoLogger = (req, res, next) => { 
     let method = req.method;
     let url = req.url;
-    let status = res.statusCode;
     
-    let log = `${method}:${url} -- ${status}`;
+    let log = `${method}:${url}`;
     console.log(log);
     next();
 };

@@ -41,7 +41,7 @@ router.post("/register", async (req, res) => {
 
         await newAdmin.save();
 
-        res.sendStatus(200);
+        res.status(200).json({ message: "Success" });
     } catch (e) {
         console.error(e);
         res.status(500).send();
@@ -92,13 +92,13 @@ router.post("/center", adminAuth, async (req, res) => {
             state,
             country } = req.body;
 
-        const generalInfo = await GeneralInfo.findOne({ tag: process.env.VERSION });
+        const generalInfo = await GeneralInfo.findOne({ version: process.env.VERSION });
 
-        generalInfo.totalCenters += 1;
-        generalInfo.totalEmployees += 1;
+        generalInfo.centerCount += 1;
+        generalInfo.employeeCount += 1;
 
         const newEmployee = new Employee({
-            id: "E" + generalInfo.totalEmployees,
+            uid: "E" + generalInfo.employeeCount,
             name: "admin" + name,
             employeeType: "Admin",
             permissionLevel: 0,
@@ -112,7 +112,7 @@ router.post("/center", adminAuth, async (req, res) => {
         const newEmployeeData = await newEmployee.save();
 
         const newCenter = new Center({
-            id: "C" + generalInfo.totalCenters,
+            uid: "C" + generalInfo.centerCount,
             name,
             contactEmail,
             contactMobile,
@@ -125,7 +125,7 @@ router.post("/center", adminAuth, async (req, res) => {
 
         await newCenter.save();
 
-        await GeneralInfo.updateOne({ tag: process.env.VERSION }, { totalCenters: generalInfo.totalCenters, totalEmployees: generalInfo.totalEmployees });
+        await GeneralInfo.updateOne({ version: process.env.VERSION }, { centerCount: generalInfo.centerCount, employeeCount: generalInfo.employeeCount });
 
         res.status(200).json({ message: "Success" });
     } catch (e) {
@@ -143,22 +143,22 @@ router.post("/course", adminAuth, async (req, res) => {
             preRequisites,
             net } = req.body
 
-        const generalInfo = await GeneralInfo.findOne({ tag: process.env.VERSION });
-        generalInfo.totalCourses += 1;
+        const generalInfo = await GeneralInfo.findOne({ version: process.env.VERSION });
+        generalInfo.courseCount += 1;
 
         const newCourse = new Course({
-            id: "Course" + generalInfo.totalCourses,
+            uid: "Course" + generalInfo.courseCount,
             title,
             description,
             division,
             duration,
             preRequisites,
-            price:net,
+            price: net,
             net
         })
 
         await newCourse.save();
-        await GeneralInfo.updateOne({ tag: process.env.VERSION }, { totalCourses: generalInfo.totalCourses });
+        await GeneralInfo.updateOne({ version: process.env.VERSION }, { courseCount: generalInfo.courseCount });
 
         res.status(200).json({ message: "Success" });
     } catch (e) {

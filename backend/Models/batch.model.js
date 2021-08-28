@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const batchSchema = new mongoose.Schema({
-    id: {
+    uid: {
         type: String,
         required: true,
     },
@@ -9,17 +9,17 @@ const batchSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    subject: {
+    course: {
         type: String,
         required: true,
     },
-    students: {
+    studentList: {
         type: Array,
-        required: true,
+        default: [],
     },
     studentCount: {
         type: Number,
-        required: true,
+        default: 0,
     },
     faculty: {
         type: String,

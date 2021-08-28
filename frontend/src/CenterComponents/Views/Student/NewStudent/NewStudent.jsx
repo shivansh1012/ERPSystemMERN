@@ -13,45 +13,37 @@ import {
     Select
 } from "@material-ui/core";
 
-import { makeStyles } from '@material-ui/core/styles';
-
 import "./newStudent.css";
 
-const useStyles = makeStyles((theme) => ({
-    margin: {
-        margin: theme.spacing(1),
-    },
-}));
-
 export default function NewStudent() {
-    const classes = useStyles();
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [mobile, setMobile] = useState('')
     const [course, setCourse] = useState(undefined)
     const [selectedCourse, setSelectedCourse] = useState('')
-    const [price, setPrice] = useState(0);
+    const [fee, setFee] = useState(0);
     const [discount, setDiscount] = useState(0);
-    const [net, setNet] = useState(0);
+    const [netFee, setNetFee] = useState(0);
+    const [paymentType, setPaymentType] = useState("full");
+    const [feePaid, setFeePaid] = useState(0);
+    const [feeBalance, setFeeBalance] = useState(0);
     const [address, setAddress] = useState('')
-    const [city, setCity] = useState('')
-    const [state, setState] = useState('')
-    const [country, setCountry] = useState('')
 
     async function Submit(e) {
         e.preventDefault();
         var FormData = {
             name: name,
-            email: email,
-            mobile: mobile,
-            course: selectedCourse,
-            discount: discount,
-            net: net,
+            email: email + "@gmail.com",
+            phone: mobile,
+            enrolledCourse: selectedCourse,
+            fee,
+            discount,
+            netFee,
+            paymentType,
+            feePaid,
+            feeBalance,
             address: address,
-            city: city,
-            state: state,
-            country: country,
         }
         axios
             .post(`${apiBaseURL}/center/student`, FormData, {
@@ -85,8 +77,9 @@ export default function NewStudent() {
         setSelectedCourse(e.target.value)
         for (let dict in course) {
             if (course[dict]["_id"] === e.target.value) {
-                setPrice(course[dict]["price"])
-                setNet(course[dict]["price"] - course[dict]["price"] * discount / 100)
+                setFee(course[dict]["price"])
+                setNetFee(course[dict]["price"] - course[dict]["price"] * discount / 100)
+                setFeeBalance(course[dict]["price"] - course[dict]["price"] * discount / 100 - feePaid);
                 break
             }
         }
@@ -94,7 +87,13 @@ export default function NewStudent() {
 
     function calcNet(e) {
         setDiscount(e.target.value)
-        setNet(price - price * e.target.value / 100)
+        setNetFee(fee - fee * e.target.value / 100)
+        setFeeBalance((netFee - fee * e.target.value / 100) - feePaid);
+    }
+
+    function handleFeePayment(e) {
+        setFeePaid(e.target.value);
+        setFeeBalance(netFee - e.target.value);
     }
 
     useEffect(() => {
@@ -111,19 +110,21 @@ export default function NewStudent() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                 />
-                <TextField
-                    fullWidth
-                    label="Email ID"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
+                <FormControl fullWidth>
+                    <InputLabel htmlFor="standard-adornment-email">Email</InputLabel>
+                    <Input
+                        id="standard-adornment-email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        endAdornment={<InputAdornment position="end">@gmail.com</InputAdornment>}
+                    />
+                </FormControl>
                 <TextField
                     fullWidth
                     label="Mobile Number"
                     value={mobile}
                     onChange={(e) => setMobile(e.target.value)}
                 />
-
                 <FormControl>
                     <InputLabel id="course-select">Select Course</InputLabel>
                     <Select
@@ -138,16 +139,16 @@ export default function NewStudent() {
                     </Select>
                 </FormControl>
 
-                <FormControl fullWidth className={classes.margin}>
+                <FormControl fullWidth>
                     <InputLabel htmlFor="standard-adornment-amount">Price</InputLabel>
                     <Input
                         id="standard-adornment-amount"
                         disabled={true}
-                        value={price}
+                        value={fee}
                         startAdornment={<InputAdornment position="start">₹</InputAdornment>}
                     />
                 </FormControl>
-                <FormControl fullWidth className={classes.margin}>
+                <FormControl fullWidth>
                     <InputLabel htmlFor="standard-adornment-discount">Discount</InputLabel>
                     <Input
                         id="standard-adornment-discount"
@@ -156,12 +157,42 @@ export default function NewStudent() {
                         endAdornment={<InputAdornment position="start">%</InputAdornment>}
                     />
                 </FormControl>
-                <FormControl fullWidth className={classes.margin}>
-                    <InputLabel htmlFor="standard-adornment-amount">Net Amount</InputLabel>
+                <FormControl fullWidth>
+                    <InputLabel htmlFor="standard-adornment-netamount">Net Amount</InputLabel>
                     <Input
-                        id="standard-adornment-amount"
+                        id="standard-adornment-netamount"
                         disabled={true}
-                        value={net}
+                        value={netFee}
+                        startAdornment={<InputAdornment position="start">₹</InputAdornment>}
+                    />
+                </FormControl>
+                <FormControl>
+                    <InputLabel id="payment-select">Payment Type</InputLabel>
+                    <Select
+                        labelId="payment-select"
+                        id="payment-select"
+                        value={paymentType}
+                        onChange={(e) => setPaymentType(e.target.value)}
+                    >
+                        <MenuItem key={1} value={"full"}>Full</MenuItem>
+                        <MenuItem key={2} value={"installment"}>Installment</MenuItem>
+                    </Select>
+                </FormControl>
+                <FormControl fullWidth>
+                    <InputLabel htmlFor="standard-adornment-fee-paid">Fee Paid Now</InputLabel>
+                    <Input
+                        id="standard-adornment-fee-paid"
+                        value={feePaid}
+                        onChange={handleFeePayment}
+                        startAdornment={<InputAdornment position="start">₹</InputAdornment>}
+                    />
+                </FormControl>
+                <FormControl fullWidth>
+                    <InputLabel htmlFor="standard-adornment-fee-balance">Balance Fee</InputLabel>
+                    <Input
+                        id="standard-adornment-balance"
+                        disabled={true}
+                        value={feeBalance}
                         startAdornment={<InputAdornment position="start">₹</InputAdornment>}
                     />
                 </FormControl>
@@ -171,26 +202,9 @@ export default function NewStudent() {
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                 />
-                <TextField
-                    fullWidth
-                    label="City"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                />
-                <TextField
-                    fullWidth
-                    label="State"
-                    value={state}
-                    onChange={(e) => setState(e.target.value)}
-                />
-                <TextField
-                    fullWidth
-                    label="Country"
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
-                />
                 <Button color="primary" variant="outlined" onClick={Submit}>Add</Button>
             </form>
+
         </div>
     )
 }

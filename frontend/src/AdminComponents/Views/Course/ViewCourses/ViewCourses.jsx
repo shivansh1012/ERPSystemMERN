@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { Button } from '@material-ui/core';
 
 const columns = [
-    { field: 'id', headerName: 'ID' },
+    { field: 'uid', headerName: 'UID' },
     { field: 'title', headerName: 'Title' , width: 200},
     { field: 'description', headerName: 'Description' , width: 200},
     { field: 'chapterCount', headerName: 'Total Chapters' , width: 200},
@@ -38,6 +38,7 @@ export default function ViewCourses() {
             </Button>
             <div style={{ height: 700, width: '100%' }}>
                 <DataGrid
+                    getRowId={(courses) => courses._id}
                     rows={courses}
                     columns={columns}
                     pageSize={20}

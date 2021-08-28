@@ -9,6 +9,8 @@ import {
     FormControl,
     Select,
     MenuItem,
+    InputAdornment,
+    Input,
 } from "@material-ui/core";
 
 import "./newEmployee.css";
@@ -28,7 +30,7 @@ export default function NewEmployee() {
             name: name,
             employeeType: employeeType,
             permissionLevel: permissionLevel,
-            email: email,
+            email: email + "@gmail.com",
             password: password,
             contactMobile: mobile,
             address: address,
@@ -80,12 +82,15 @@ export default function NewEmployee() {
                         <MenuItem value={4}>Faculty</MenuItem>
                     </Select>
                 </FormControl>
-                <TextField
-                    fullWidth
-                    label="Login Email ID"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
+                <FormControl fullWidth>
+                    <InputLabel htmlFor="standard-adornment-email">Email</InputLabel>
+                    <Input
+                        id="standard-adornment-email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        endAdornment={<InputAdornment position="end">@gmail.com</InputAdornment>}
+                    />
+                </FormControl>
                 <TextField
                     fullWidth
                     label="Assign Password"

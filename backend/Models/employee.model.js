@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const employeeSchema = new mongoose.Schema({
-    id:{
+    uid:{
         type: String,
         required: true,
     },
@@ -36,6 +36,10 @@ const employeeSchema = new mongoose.Schema({
     center:{
         type: String,
         required: true,
+    },
+    batchList:{
+        type: Array,
+        default: true,
     }
 })
 

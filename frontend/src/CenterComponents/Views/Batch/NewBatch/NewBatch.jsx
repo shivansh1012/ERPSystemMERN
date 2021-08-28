@@ -23,7 +23,9 @@ export default function NewBatch() {
     async function Submit(e) {
         e.preventDefault();
         var FormData = {
-
+            name,
+            selectedFaculty,
+            selectedCourse,
         }
         axios
             .post(`${apiBaseURL}/center/batch`, FormData, {
@@ -42,13 +44,13 @@ export default function NewBatch() {
 
     const getFacultyList = async () => {
         await axios
-            .get(`${apiBaseURL}/center/employee/Faculty`)
+            .get(`${apiBaseURL}/center/employee/?type=Faculty`)
             .then((res) => {
                 setFacultyList(res.data)
             })
             .catch((err) => {
                 console.error(err);
-                alert(err)
+                alert(`Faculty error ${err}`)
             })
     }
 
@@ -57,11 +59,10 @@ export default function NewBatch() {
             .get(`${apiBaseURL}/service/course`)
             .then((res) => {
                 setCourseList(res.data)
-                console.log(res.data)
             })
             .catch((err) => {
                 console.error(err);
-                alert(err)
+                alert(`Course error ${err}`)
             })
     }
 

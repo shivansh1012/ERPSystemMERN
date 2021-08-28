@@ -39,8 +39,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
     const classes = useStyles();
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("admin1@gmail.com");
+    const [password, setPassword] = useState("admin1234");
 
     const { getAdminLoggedIn } = useContext(AdminAuthContext);
     const history = useHistory();

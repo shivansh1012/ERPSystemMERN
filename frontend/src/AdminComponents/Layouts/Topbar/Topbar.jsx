@@ -11,12 +11,12 @@ export default function Topbar() {
     const { adminEmail, getAdminLoggedIn } = useContext(AdminAuthContext);
 
     const history = useHistory();
-    
+
     async function logout() {
         await axios.get(`${apiBaseURL}/admin/logout`);
         await getAdminLoggedIn();
         history.push("/admin");
-      }
+    }
     return (
         <div className="topbar">
             <div className="topbarWrapper">
@@ -24,11 +24,11 @@ export default function Topbar() {
                     <span className="logo">ADMIN Management Portal</span>
                 </div>
                 <div className="topRight">
-                    <div style={{margin:"20px"}}>{adminEmail}</div>
-                    <div style={{ margin: "20px" }} className="topbarIconContainer" onClick={()=>history.push("/")}>
+                    <div style={{ margin: "20px" }}>{adminEmail}</div>
+                    <div style={{ margin: "20px" }} className="topbarIconContainer" onClick={() => history.push("/")}>
                         <HomeIcon />
                     </div>
-                    <div style={{margin:"20px"}} className="topbarIconContainer" onClick={logout}>
+                    <div style={{ margin: "20px" }} className="topbarIconContainer" onClick={logout}>
                         <PowerSettingsNew />
                     </div>
                 </div>

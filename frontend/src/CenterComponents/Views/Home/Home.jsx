@@ -16,7 +16,7 @@ export default function Home() {
     return (
         <div className="page">
             <h1 style={{ textAlign: "center" }}>Home</h1>
-            <h3 style={{ textAlign: "center" }}>Version: {info.tag}</h3>
+            <h3 style={{ textAlign: "center" }}>Version: {info.version}</h3>
             <FeaturedInfo title1={"Total Enquiries"} value1={info.totalEnquiries} title2={"Pending Enquiries"} value2={info.pendingEnquiries} title3={"Archived Enquiries"} value3={info.archivedEnquiries} />
         </div>
     )
