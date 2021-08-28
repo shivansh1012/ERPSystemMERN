@@ -20,7 +20,7 @@ export default function NewStudent() {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [mobile, setMobile] = useState('')
-    const [course, setCourse] = useState(undefined)
+    const [courseList, setCourseList] = useState(undefined)
     const [selectedCourse, setSelectedCourse] = useState('')
     const [fee, setFee] = useState(0);
     const [discount, setDiscount] = useState(0);
@@ -61,25 +61,13 @@ export default function NewStudent() {
 
     }
 
-    const getCourseDetails = async () => {
-        await axios
-            .get(`${apiBaseURL}/service/course`)
-            .then((res) => {
-                setCourse(res.data)
-            })
-            .catch((err) => {
-                console.error(err);
-                alert(err)
-            })
-    }
-
     function changeCourse(e) {
         setSelectedCourse(e.target.value)
-        for (let dict in course) {
-            if (course[dict]["_id"] === e.target.value) {
-                setFee(course[dict]["price"])
-                setNetFee(course[dict]["price"] - course[dict]["price"] * discount / 100)
-                setFeeBalance(course[dict]["price"] - course[dict]["price"] * discount / 100 - feePaid);
+        for (let dict in courseList) {
+            if (courseList[dict]["_id"] === e.target.value) {
+                setFee(courseList[dict]["price"])
+                setNetFee(courseList[dict]["price"] - courseList[dict]["price"] * discount / 100)
+                setFeeBalance(courseList[dict]["price"] - courseList[dict]["price"] * discount / 100 - feePaid);
                 break
             }
         }
@@ -94,6 +82,18 @@ export default function NewStudent() {
     function handleFeePayment(e) {
         setFeePaid(e.target.value);
         setFeeBalance(netFee - e.target.value);
+    }
+    
+    const getCourseDetails = async () => {
+        await axios
+            .get(`${apiBaseURL}/service/course`)
+            .then((res) => {
+                setCourseList(res.data.courseList)
+            })
+            .catch((err) => {
+                console.error(err);
+                alert(err)
+            })
     }
 
     useEffect(() => {
@@ -133,8 +133,8 @@ export default function NewStudent() {
                         value={selectedCourse}
                         onChange={changeCourse}
                     >
-                        {course !== undefined && course.map((cour) => (
-                            <MenuItem key={cour._id} value={cour._id}>{cour.title}</MenuItem>
+                        {courseList !== undefined && courseList.map((course) => (
+                            <MenuItem key={course._id} value={course._id}>{course.title}</MenuItem>
                         ))}
                     </Select>
                 </FormControl>

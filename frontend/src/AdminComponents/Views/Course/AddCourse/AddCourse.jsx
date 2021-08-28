@@ -1,18 +1,10 @@
 import React, { useState } from 'react';
 import "./addCourse.css";
-import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Button, InputLabel, InputAdornment, Input, FormControl } from "@material-ui/core";
 import axios from "axios";
 import { apiBaseURL } from "../../../../Config"
 
-const useStyles = makeStyles((theme) => ({
-    margin: {
-        margin: theme.spacing(1),
-    },
-}));
-
 export default function AddCourse() {
-    const classes = useStyles();
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [division, setDivision] = useState('')
@@ -84,7 +76,7 @@ export default function AddCourse() {
                     value={preRequisites}
                     onChange={(e) => setPreRequisites(e.target.value)}
                 />
-                <FormControl fullWidth className={classes.margin}>
+                <FormControl fullWidth>
                     <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
                     <Input
                         id="standard-adornment-amount"

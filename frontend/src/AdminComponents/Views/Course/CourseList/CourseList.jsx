@@ -20,11 +20,11 @@ const columns = [
 ]
 
 
-export default function ViewCourses() {
-    const [courses, setCourses] = useState([]);
+export default function CourseList() {
+    const [courseList, setCourseList] = useState([]);
 
     useEffect(() => {
-        axios.get(`${apiBaseURL}/service/course`).then((courseList) => setCourses(courseList.data));
+        axios.get(`${apiBaseURL}/service/course`).then((res) => setCourseList(res.data.courseList));
     }, []);
 
     return (
@@ -38,8 +38,8 @@ export default function ViewCourses() {
             </Button>
             <div style={{ height: 700, width: '100%' }}>
                 <DataGrid
-                    getRowId={(courses) => courses._id}
-                    rows={courses}
+                    getRowId={(courseList) => courseList._id}
+                    rows={courseList}
                     columns={columns}
                     pageSize={20}
                     disableColumnMenu

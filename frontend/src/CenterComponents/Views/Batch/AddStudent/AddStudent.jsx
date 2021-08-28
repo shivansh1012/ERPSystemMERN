@@ -19,22 +19,16 @@ const columns = [
 ]
 
 export default function AddStudent() {
-    const [students, setStudents] = useState([]);
+    const [studentList, setStudentList] = useState([]);
+    const [batchList, setBatchList] = useState([]);
     const [selectedRow, setSelectedRow] = useState([]);
-    const [selectedBatch, setSelectedBatch] = useState('')
-    const [batch, setBatch] = useState(undefined)
+    const [selectedBatch, setSelectedBatch] = useState('');
 
     const [selectionModal, setSelectionModal] = useState([])
 
     const changeBatch = async (e) => {
         setSelectedBatch(e.target.value)
-        setSelectionModal(students.filter((std) => std.batchList.includes(e.target.value)).map((std) => std._id));
-        // await axios
-        //     .get(`${apiBaseURL}/center/batch/?id=${e.target.value}`)
-        //     .then((res) => {
-
-        //     })
-        //     .catch((err) => { console.error(err); alert(err); });
+        setSelectionModal(studentList.filter((std) => std.batchList.includes(e.target.value)).map((std) => std._id));
     }
 
     const handleSubmit = async (e) => {
@@ -61,14 +55,14 @@ export default function AddStudent() {
     const getBatchDetails = async () => {
         await axios
             .get(`${apiBaseURL}/center/batch`)
-            .then((batchList) => setBatch(batchList.data))
+            .then((res) => setBatchList(res.data.batchList))
             .catch((err) => { console.error(err); alert(err); });
     }
 
     const getStudentDetails = async () => {
         await axios
             .get(`${apiBaseURL}/center/student`)
-            .then((studentList) => setStudents(studentList.data))
+            .then((res) => setStudentList(res.data.studentList))
             .catch((err) => { console.error(err); alert(err); });
     }
 
@@ -89,16 +83,16 @@ export default function AddStudent() {
                         id="batch-select"
                         value={selectedBatch}
                         onChange={changeBatch}>
-                        {batch !== undefined && batch.map((bat) => (
-                            <MenuItem key={bat._id} value={bat._id}>{bat.name}</MenuItem>
+                        {batchList !== undefined && batchList.map((batch) => (
+                            <MenuItem key={batch._id} value={batch._id}>{batch.name}</MenuItem>
                         ))}
                     </Select>
                 </FormControl>
 
                 <div style={{ height: 400, width: '100%' }}>
                     <DataGrid
-                        getRowId={(students) => students._id}
-                        rows={students}
+                        getRowId={(studentList) => studentList._id}
+                        rows={studentList}
                         columns={columns}
                         pageSize={100}
                         disableColumnMenu

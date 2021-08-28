@@ -63,7 +63,7 @@ router.get("/profile", studentAuth, async (req, res) => {
         existingStudent.enrolledCourse = namedCourseList
 
         res.status(200)
-            .json(existingStudent);
+            .json({studentInfo : existingStudent});
     } catch (e) {
         console.error(e);
         res.status(500).json({ message: "Internal Server Error" }).send();
@@ -87,7 +87,7 @@ router.get("/batch", studentAuth, async (req, res) => {
         }
 
         res.status(200)
-            .json(namedBatchList);
+            .json({batchList: namedBatchList});
     } catch (e) {
         console.error(e);
         res.status(500).json({ message: "Internal Server Error" }).send();

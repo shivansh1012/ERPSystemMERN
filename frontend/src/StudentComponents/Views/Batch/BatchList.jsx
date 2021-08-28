@@ -2,45 +2,34 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { apiBaseURL } from "../../../Config.js";
 
-import { AgGridReact, AgGridColumn } from 'ag-grid-react';
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+import { DataGrid } from "@material-ui/data-grid";
+
+const columns = [
+    { field: '_id', headerName: 'ID' },
+    { field: 'uid', headerName: 'UID' },
+    { field: 'name', headerName: 'Name', width: 200 },
+    { field: 'course', headerName: 'Course', width: 200 },
+    { field: 'faculty', headerName: 'Faculty', width: 200 },
+]
 
 export default function BatchList() {
-    const [batches, setBatches] = useState([]);
+    const [batchList, setBatchList] = useState([]);
 
     useEffect(() => {
-        axios.get(`${apiBaseURL}/student/batch`).then((batchList) => setBatches(batchList.data));
+        axios.get(`${apiBaseURL}/student/batch`).then((res) => setBatchList(res.data.batchList));
     }, []);
 
     return (
         <div className="page">
             <h1 style={{ textAlign: "center" }}>Batch List</h1>
             <div style={{ width: '100%', height: '100%' }}>
-                <div
-                    id="myGrid"
-                    style={{
-                        height: '100%',
-                        width: '100%',
-                    }}
-                    className="ag-theme-alpine">
-                    <AgGridReact
-                        rowData={batches}
-                        defaultColDef={{
-                            flex: 1,
-                            minWidth: 130,
-                            resizable: true,
-                        }}
-                    // onGridReady={onGridReady}
-                    >
-
-                        <AgGridColumn field="uid" headerName="UID" />
-                        <AgGridColumn field="name" />
-                        <AgGridColumn field="course" />
-                        <AgGridColumn field="faculty" />
-
-                    </AgGridReact>
-                </div>
+                <DataGrid
+                    getRowId={(batchList) => batchList._id}
+                    rows={batchList}
+                    columns={columns}
+                    pageSize={20}
+                    disableColumnMenu
+                />
             </div>
         </div>
     )

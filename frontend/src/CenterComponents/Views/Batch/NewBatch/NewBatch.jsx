@@ -46,7 +46,7 @@ export default function NewBatch() {
         await axios
             .get(`${apiBaseURL}/center/employee/?type=Faculty`)
             .then((res) => {
-                setFacultyList(res.data)
+                setFacultyList(res.data.employeeList)
             })
             .catch((err) => {
                 console.error(err);
@@ -58,7 +58,7 @@ export default function NewBatch() {
         await axios
             .get(`${apiBaseURL}/service/course`)
             .then((res) => {
-                setCourseList(res.data)
+                setCourseList(res.data.courseList)
             })
             .catch((err) => {
                 console.error(err);

@@ -70,7 +70,7 @@ router.get("/batch", centerAuth, async (req, res) => {
 
             batchList = namedBatchList;
         }
-        res.status(200).json(batchList);
+        res.status(200).json({batchList});
     } catch (e) {
         console.error(e);
         res.status(500).json({ message: "Internal Server Error" }).send();
@@ -132,9 +132,6 @@ router.post("/batch/student", centerAuth, async (req, res) => {
     }
 })
 
-
-
-
 router.get("/employee", centerAuth, async (req, res) => {
     try {
         const center = req.employeeInfo.center;
@@ -145,7 +142,7 @@ router.get("/employee", centerAuth, async (req, res) => {
         else
             var employeeList = await Employee.find({ center: center });
 
-        res.status(200).json(employeeList);
+        res.status(200).json({employeeList});
     } catch (e) {
         console.error(e);
         res.status(500).json({ message: "Internal Server Error" }).send();
@@ -201,7 +198,7 @@ router.get("/student", centerAuth, async (req, res) => {
     try {
         const center = req.employeeInfo.center;
         const studentList = await Student.find({ center: center });
-        res.status(200).json(studentList);
+        res.status(200).json({studentList});
     } catch (e) {
         console.error(e);
         res.status(500).json({ message: "Internal Server Error" }).send();

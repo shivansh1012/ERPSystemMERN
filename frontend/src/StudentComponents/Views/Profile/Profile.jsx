@@ -9,8 +9,7 @@ export default function Profile() {
         await axios
         .get(`${apiBaseURL}/student/profile`)
         .then((res) => {
-            sefInfo(res.data)
-            console.log(res.data)
+            sefInfo(res.data.studentInfo)
         })
         .catch((err) => {
             console.error(err);

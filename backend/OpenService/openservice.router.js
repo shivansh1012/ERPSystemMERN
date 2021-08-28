@@ -10,9 +10,9 @@ const Course = require("../Models/course.model.js");
 //Request Handlers
 router.get("/generalInfo", async (req, res) => {
     try {
-        const generalinfo = await GeneralInfo.findOne({ version: process.env.VERSION });
+        const generalInfo = await GeneralInfo.findOne({ version: process.env.VERSION });
 
-        res.status(200).json(generalinfo);
+        res.status(200).json({ generalInfo });
     } catch (e) {
         console.error(e);
         res.status(500).json({ errorMessage: "Internal Server Error" }).send();
@@ -37,7 +37,7 @@ router.get("/center", async (req, res) => {
     try {
         const centerList = await Center.find();
 
-        res.status(200).json(centerList);
+        res.status(200).json({ centerList: centerList });
     } catch (e) {
         console.error(e);
         res.status(500).json({ errorMessage: "Internal Server Error" }).send();
@@ -49,12 +49,12 @@ router.get("/course", async (req, res) => {
         const courseID = req.query.id;
         let courseList
 
-        if(courseID)
-            courseList = await Course.find({ "_id": courseID });
+        if (courseID)
+            courseList = await Course.findOne({ "_id": courseID });
         else
             courseList = await Course.find();
 
-        res.status(200).json(courseList);
+        res.status(200).json({ courseList });
     } catch (e) {
         console.error(e);
         res.status(500).json({ errorMessage: "Internal Server Error" }).send();
@@ -68,7 +68,7 @@ router.post("/course/:id", async (req, res) => {
 
         await Course.findOneAndUpdate({ "_id": courseID }, { chapters: chapterData, chapterCount: chapterData.length });
 
-        res.status(200).json({message: "Success"});
+        res.status(200).json({ message: "Success" });
     } catch (e) {
         console.error(e);
         res.status(500).json({ message: "Internal Server Error" });
@@ -88,15 +88,15 @@ router.get("/enquiry", async (req, res) => {
 
 router.post("/enquiry", async (req, res) => {
     try {
-        const { name, 
-            enquiry, 
-            email, 
-            mobile, 
-            address, 
-            city, 
-            state, 
+        const { name,
+            enquiry,
+            email,
+            mobile,
+            address,
+            city,
+            state,
             country } = req.body;
-            
+
         const generalInfo = await GeneralInfo.findOne({ version: process.env.VERSION });
 
         generalInfo.totalEnquiries += 1;
@@ -126,13 +126,13 @@ router.post("/enquiry", async (req, res) => {
 
 router.patch("/enquiry", async (req, res) => {
     try {
-        const { _id, oldValue, newValue} = req.body;
-        
+        const { _id, oldValue, newValue } = req.body;
+
         if (newValue === "Not Interested") {
-            await GeneralInfo.findOneAndUpdate({ version: process.env.VERSION }, {  $inc: {pendingEnquiries: -1 , archivedEnquiries: 1}});
+            await GeneralInfo.findOneAndUpdate({ version: process.env.VERSION }, { $inc: { pendingEnquiries: -1, archivedEnquiries: 1 } });
         }
         else if (oldValue === "Not Interested")
-            await GeneralInfo.findOneAndUpdate({ version: process.env.VERSION }, {  $inc: {pendingEnquiries: 1 , archivedEnquiries: -1}});
+            await GeneralInfo.findOneAndUpdate({ version: process.env.VERSION }, { $inc: { pendingEnquiries: 1, archivedEnquiries: -1 } });
 
         await Enquiry.findOneAndUpdate({ _id: _id }, { status: newValue });
 

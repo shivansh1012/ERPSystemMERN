@@ -22,10 +22,10 @@ const columns = [
 ]
 
 export default function StudentList() {
-    const [students, setStudents] = useState([]);
+    const [studentList, setStudentList] = useState([]);
 
     useEffect(() => {
-        axios.get(`${apiBaseURL}/center/student`).then((studentList) => setStudents(studentList.data));
+        axios.get(`${apiBaseURL}/center/student`).then((res) => setStudentList(res.data.studentList));
     }, []);
 
     return (
@@ -36,8 +36,8 @@ export default function StudentList() {
             </Button>
             <div style={{ height: 700, width: '100%' }}>
                 <DataGrid
-                    getRowId={(students) => students._id}
-                    rows={students}
+                    getRowId={(studentList) => studentList._id}
+                    rows={studentList}
                     columns={columns}
                     pageSize={20}
                     disableColumnMenu

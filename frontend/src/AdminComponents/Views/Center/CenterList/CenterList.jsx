@@ -19,11 +19,11 @@ const columns = [
     { field: 'totalEmployees', headerName: 'Employees', width: 200 },
 ]
 
-export default function CenterReport() {
-    const [centers, setCenters] = useState([]);
+export default function CenterList() {
+    const [centerList, setCenterList] = useState([]);
 
     useEffect(() => {
-        axios.get(`${apiBaseURL}/service/center`).then((centerList) => setCenters(centerList.data));
+        axios.get(`${apiBaseURL}/service/center`).then((res) => setCenterList(res.data.centerList));
     }, []);
 
     return (
@@ -34,8 +34,8 @@ export default function CenterReport() {
             </Button>
             <div style={{ height: 700, width: '100%' }}>
                 <DataGrid
-                    getRowId={(centers) => centers._id}
-                    rows={centers}
+                    getRowId={(centerList) => centerList._id}
+                    rows={centerList}
                     columns={columns}
                     pageSize={20}
                     disableColumnMenu

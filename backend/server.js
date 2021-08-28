@@ -34,6 +34,6 @@ app.use(`/api/${process.env.VERSION}/center`, require("./CenterService/center.ro
 app.use(`/api/${process.env.VERSION}/service`, require("./OpenService/openservice.router.js"));
 app.use(`/api/${process.env.VERSION}/student`, require("./StudentService/student.router.js"));
 
-app.use("*", (req, res) => res.status(404).json({ error: "not found" }));
+app.use("*", (req, res) => res.status(404).json({ message: "link not found" }));
 
 module.exports = app;

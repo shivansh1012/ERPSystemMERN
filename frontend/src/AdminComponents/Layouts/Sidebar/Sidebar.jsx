@@ -31,7 +31,7 @@ export default function Sidebar() {
                         <Link to="/admin/center" className="link">
                             <li className="sidebarListItem">
                                 <Assessment className="sidebarIcon" />
-                                Center Report
+                                View Centers
                             </li>
                         </Link>
                     </ul>

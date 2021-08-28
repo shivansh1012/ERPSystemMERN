@@ -8,8 +8,8 @@ export default function Home() {
     const [info, setInfo] = useState([]);
 
     useEffect(() => {
-        axios.get(`${apiBaseURL}/service/generalinfo`).then((generalinfo) => {
-            setInfo(generalinfo.data)
+        axios.get(`${apiBaseURL}/service/generalinfo`).then((res) => {
+            setInfo(res.data.generalInfo)
         });
     }, []);
 
