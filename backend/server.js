@@ -17,7 +17,7 @@ app.use(cors({
 }));
 
 //logging middleware
-let demoLogger = (req, res, next) => { 
+let requestLogger = (req, res, next) => { 
     let method = req.method;
     let url = req.url;
     
@@ -26,7 +26,7 @@ let demoLogger = (req, res, next) => {
     next();
 };
 
-app.use(demoLogger);
+app.use(requestLogger);
 
 //Links
 app.use(`/api/${process.env.VERSION}/admin`, require("./AdminService/admin.router.js"));

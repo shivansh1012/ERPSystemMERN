@@ -65,25 +65,27 @@ export default function NewStudent() {
         setSelectedCourse(e.target.value)
         for (let dict in courseList) {
             if (courseList[dict]["_id"] === e.target.value) {
-                setFee(courseList[dict]["price"])
-                setNetFee(courseList[dict]["price"] - courseList[dict]["price"] * discount / 100)
-                setFeeBalance(courseList[dict]["price"] - courseList[dict]["price"] * discount / 100 - feePaid);
+                const price = courseList[dict]["price"];
+                setFee(price)
+                setNetFee(price - ((price * discount) / 100))
+                setFeeBalance((price - ((price * discount) / 100)) - feePaid);
                 break
             }
         }
     }
 
-    function calcNet(e) {
-        setDiscount(e.target.value)
-        setNetFee(fee - fee * e.target.value / 100)
-        setFeeBalance((netFee - fee * e.target.value / 100) - feePaid);
+    function handelDiscountChange(e) {
+        const disc = e.target.value;
+        setDiscount(disc)
+        setNetFee(fee - ((fee * disc) / 100))
+        setFeeBalance((fee - ((fee * disc) / 100)) - feePaid);
     }
 
-    function handleFeePayment(e) {
+    function handleFeePay(e) {
         setFeePaid(e.target.value);
         setFeeBalance(netFee - e.target.value);
     }
-    
+
     const getCourseDetails = async () => {
         await axios
             .get(`${apiBaseURL}/service/course`)
@@ -153,7 +155,7 @@ export default function NewStudent() {
                     <Input
                         id="standard-adornment-discount"
                         value={discount}
-                        onChange={calcNet}
+                        onChange={handelDiscountChange}
                         endAdornment={<InputAdornment position="start">%</InputAdornment>}
                     />
                 </FormControl>
@@ -183,7 +185,7 @@ export default function NewStudent() {
                     <Input
                         id="standard-adornment-fee-paid"
                         value={feePaid}
-                        onChange={handleFeePayment}
+                        onChange={handleFeePay}
                         startAdornment={<InputAdornment position="start">₹</InputAdornment>}
                     />
                 </FormControl>

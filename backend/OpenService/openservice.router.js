@@ -6,6 +6,9 @@ const Enquiry = require("../Models/enquiry.model.js");
 const GeneralInfo = require("../Models/generalInfo.model.js");
 const Center = require("../Models/center.model.js");
 const Course = require("../Models/course.model.js");
+const Employee = require("../Models/employee.model.js");
+const Student = require("../Models/student.model.js");
+const Batch = require("../Models/batch.model.js");
 
 //Request Handlers
 router.get("/generalInfo", async (req, res) => {
@@ -38,6 +41,36 @@ router.get("/center", async (req, res) => {
         const centerList = await Center.find();
 
         res.status(200).json({ centerList: centerList });
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
+    }
+})
+
+router.get("/employee", async (req, res) => {
+    try {
+        const employeeList = await Employee.find();
+        res.status(200).json({ employeeList });
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
+    }
+})
+
+router.get("/student", async (req, res) => {
+    try {
+        const studentList = await Student.find();
+        res.status(200).json({ studentList });
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ errorMessage: "Internal Server Error" }).send();
+    }
+})
+
+router.get("/batch", async (req, res) => {
+    try {
+        const batchList = await Batch.find();
+        res.status(200).json({ batchList });
     } catch (e) {
         console.error(e);
         res.status(500).json({ errorMessage: "Internal Server Error" }).send();

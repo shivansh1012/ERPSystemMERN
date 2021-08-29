@@ -50,6 +50,30 @@ export default function Sidebar() {
                 <div className="sidebarMenu">
                     <h3 className="sidebarTitle">Staff</h3>
                     <ul className="sidebarList">
+                        <Link to="/admin/employee" className="link">
+                            <li className="sidebarListItem">
+                                <WorkOutline className="sidebarIcon" />
+                                Employee List
+                            </li>
+                        </Link>
+                        <Link to="/admin/student" className="link">
+                            <li className="sidebarListItem">
+                                <WorkOutline className="sidebarIcon" />
+                                Student List
+                            </li>
+                        </Link>
+                        <Link to="/admin/batch" className="link">
+                            <li className="sidebarListItem">
+                                <WorkOutline className="sidebarIcon" />
+                                Batch List
+                            </li>
+                        </Link>
+                        <Link to="/admin/enquiry" className="link">
+                            <li className="sidebarListItem">
+                                <WorkOutline className="sidebarIcon" />
+                                Enquiry List
+                            </li>
+                        </Link>
                         <Link to="/admin/manage" className="link">
                             <li className="sidebarListItem">
                                 <WorkOutline className="sidebarIcon" />

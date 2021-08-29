@@ -10,6 +10,10 @@ import AddChapters from "./Views/Course/AddChapters/AddChapters.jsx";
 import AddCourse from "./Views/Course/AddCourse/AddCourse.jsx";
 import CourseList from "./Views/Course/CourseList/CourseList.jsx";
 
+import EmployeeList from "./Views/EmployeeList/EmployeeList.jsx";
+import StudentList from "./Views/StudentList/StudentList.jsx";
+import BatchList from "./Views/BatchList/BatchList.jsx";
+import EnquiryList from "./Views/EnquiryList/EnquiryList.jsx";
 import Manage from "./Views/Manage/Manage.jsx";
 import Analytics from "./Views/Analytics/Analytics.jsx";
 import Report from "./Views/Report/Report.jsx";
@@ -28,6 +32,10 @@ export default function LoggedInRouter(props) {
             <Route exact path={`${path}/course/new`}><AddCourse /></Route>
             <Route exact path={`${path}/course/chapter`}><AddChapters /></Route>
 
+            <Route exact path={`${path}/employee`}><EmployeeList /></Route>
+            <Route exact path={`${path}/student`}><StudentList /></Route>
+            <Route exact path={`${path}/batch`}><BatchList /></Route>
+            <Route exact path={`${path}/enquiry`}><EnquiryList /></Route>
             <Route exact path={`${path}/manage`}><Manage /></Route>
             <Route exact path={`${path}/analytics`}><Analytics /></Route>
             <Route exact path={`${path}/report`}><Report /></Route>

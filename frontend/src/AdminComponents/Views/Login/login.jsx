@@ -58,7 +58,7 @@ export default function Login() {
             },
         })
             .then(async (res) => {
-                console.log(res)
+                // console.log(res)
                 await getAdminLoggedIn();
                 history.push("/admin");
             })
